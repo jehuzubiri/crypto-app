@@ -1,4 +1,3 @@
-// @DESC: init app providers
 import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ReduxProvider } from "@/redux/tools/provider";

@@ -4,18 +4,19 @@ import {
   createContext,
   useContext,
   useEffect,
-  useMemo,
   useState,
+  useMemo,
   ReactNode,
 } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import getTheme from "@/theme";
 
+type ThemeModes = "light" | "dark";
 interface ThemeContextProps {
-  mode: "light" | "dark";
+  mode: ThemeModes;
   toggleTheme: () => void;
-  setThemeMode: (mode: "light" | "dark") => void;
+  setThemeMode: (mode: ThemeModes) => void;
 }
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
@@ -28,7 +29,7 @@ export const useThemeContext = () => {
   return context;
 };
 
-const getInitialMode = (): "light" | "dark" => {
+const getInitialMode = (): ThemeModes => {
   if (typeof window !== "undefined") {
     const stored = localStorage.getItem("theme-mode") as
       | "light"
@@ -36,16 +37,16 @@ const getInitialMode = (): "light" | "dark" => {
       | null;
     if (stored) return stored;
 
-    const prefersDark = window.matchMedia(
+    const prefersLight = window.matchMedia(
       "(prefers-color-scheme: light)"
     ).matches;
-    return prefersDark ? "dark" : "light";
+    return prefersLight ? "dark" : "light";
   }
   return "light"; // default fallback (SSR)
 };
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [mode, setMode] = useState<"light" | "dark">(getInitialMode);
+  const [mode, setMode] = useState<ThemeModes>(getInitialMode);
 
   // for global usage
   const toggleTheme = () => {
@@ -54,10 +55,12 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("theme-mode", newMode);
   };
 
-  const setThemeMode = (newMode: "light" | "dark") => {
+  const setThemeMode = (newMode: ThemeModes) => {
     setMode(newMode);
     localStorage.setItem("theme-mode", newMode);
   };
+
+  const theme = useMemo(() => getTheme(mode), [mode]);
 
   // Update <body> class for global CSS syncing
   useEffect(() => {
@@ -66,8 +69,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       document.body.classList.add(`${mode}-mode`);
     }
   }, [mode]);
-
-  const theme = useMemo(() => getTheme(mode), [mode]);
 
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme, setThemeMode }}>
