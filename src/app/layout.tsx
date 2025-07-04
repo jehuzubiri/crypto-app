@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import { ReduxProvider } from "@/redux/tools/provider";
-import { ThemeProvider } from "@/theme/ThemeContext";
 import { AppConfig } from "@/constant/App.const";
+import Providers from "@/components/Provider";
 import MainLayout from "@/components/Layout";
 
 // @DESC: init app font
@@ -50,13 +48,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AppRouterCacheProvider>
-          <ThemeProvider>
-            <ReduxProvider>
-              <MainLayout>{children}</MainLayout>
-            </ReduxProvider>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <Providers>
+          <MainLayout>{children}</MainLayout>
+        </Providers>
       </body>
     </html>
   );
