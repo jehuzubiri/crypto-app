@@ -9,10 +9,33 @@ const getTheme = (mode: "light" | "dark") => {
     palette: {
       mode,
       background: {
-        default: mode === "light" ? "#ffffff" : "#0a0a0a",
+        default: mode === "light" ? "#ffffff" : "#0E0F18",
       },
       text: {
         primary: mode === "light" ? "#171717" : "#ededed",
+      },
+      info: {
+        main: "#0057FF",
+      },
+      warning: {
+        main: "#FFD101",
+      },
+      success: {
+        main: mode === "light" ? "#2BAF21" : "#32CC86",
+      },
+      error: {
+        main: mode === "light" ? "#F2383A" : "#FC3044",
+      },
+      grey: {
+        100: "#f1f5f9",
+        200: "#e2e8f0",
+        300: "#cbd5e1",
+        400: "#94a3b8",
+        500: "#64748b",
+        600: "#475569",
+        700: "#334155",
+        800: "#1e293b",
+        900: "#0f172a",
       },
     },
     breakpoints: {

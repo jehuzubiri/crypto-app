@@ -26,22 +26,25 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
     },
     header: {
       ...theme?.cxFlexBox?.rowCenterBetween,
+      borderBottom: `1px solid ${theme.palette?.grey?.[scrolled ? 600 : 300]}`,
+      backgroundColor: theme.palette?.background,
       position,
-      border: `1px solid ${scrolled ? "green" : "red"}`,
-      padding: "0.75rem 0",
+      padding: "0.75rem 1rem",
       width: "100%",
       left: 0,
-      paddingRight: "unset !important",
       [TABLET_above]: {
-        padding: "1.5rem 0",
+        padding: "1rem 1.5rem",
       },
     },
     footer: {
-      ...theme?.cxFlexBox?.rowCenterBetween,
-      border: "1px solid green",
-      padding: "0.75rem 0",
+      border: `1px solid ${theme.palette?.grey?.[300]}`,
+      padding: "0.75rem 1rem",
       [TABLET_above]: {
-        padding: "1.5rem 0",
+        padding: "1rem 1.5rem",
+      },
+      "& > p": {
+        ...theme.cxTypography.paragraph,
+        color: theme.palette?.text,
       },
     },
   };

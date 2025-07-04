@@ -34,6 +34,7 @@ export interface CustomThemeOptions {
     header: FontStyleType;
     subHeader: FontStyleType;
     paragraph: FontStyleType;
+    tag: FontStyleType;
   };
   cxImage: {
     cover: CustomImageType;

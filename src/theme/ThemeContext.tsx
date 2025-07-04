@@ -29,26 +29,23 @@ export const useThemeContext = () => {
   return context;
 };
 
-const getInitialMode = (): ThemeModes => {
-  if (typeof window !== "undefined") {
-    const stored = localStorage.getItem("theme-mode") as
-      | "light"
-      | "dark"
-      | null;
-    if (stored) return stored;
-
-    const prefersLight = window.matchMedia(
-      "(prefers-color-scheme: light)"
-    ).matches;
-    return prefersLight ? "dark" : "light";
-  }
-  return "light"; // default fallback (SSR)
-};
-
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [mode, setMode] = useState<ThemeModes>(getInitialMode);
+  const [mode, setMode] = useState<ThemeModes>("light");
+  const [isMounted, setIsMounted] = useState(false);
 
-  // for global usage
+  useEffect(() => {
+    const stored = localStorage.getItem("theme-mode") as ThemeModes | null;
+    if (stored) {
+      setMode(stored);
+    } else {
+      const prefersLight = window.matchMedia(
+        "(prefers-color-scheme: light)"
+      ).matches;
+      setMode(prefersLight ? "light" : "dark");
+    }
+    setIsMounted(true);
+  }, []);
+
   const toggleTheme = () => {
     const newMode = mode === "light" ? "dark" : "light";
     setMode(newMode);
@@ -62,13 +59,14 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   const theme = useMemo(() => getTheme(mode), [mode]);
 
-  // Update <body> class for global CSS syncing
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.body.classList.remove("light-mode", "dark-mode");
       document.body.classList.add(`${mode}-mode`);
     }
   }, [mode]);
+
+  if (!isMounted) return null;
 
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme, setThemeMode }}>

@@ -47,6 +47,12 @@ export const customTheme: CustomThemeOptions = {
       lineHeight: "1.25em",
       letterSpacing: "0.02em",
     },
+    tag: {
+      fontSize: "0.75em",
+      fontWeight: "400",
+      lineHeight: "1.125em",
+      letterSpacing: "0",
+    },
   },
   //@DESC: type-class-name {...theme.cxFlexBox.<key>}
   cxFlexBox: {

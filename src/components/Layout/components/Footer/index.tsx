@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import useStyle from "../../useLayoutStyles";
 
 const LayoutFooter: React.FC = () => {
@@ -7,7 +7,7 @@ const LayoutFooter: React.FC = () => {
 
   return (
     <Box component="footer" sx={style.footer}>
-      <p>Main Layout Footer</p>
+      <Typography>Simple React.js/Next.js Project by Jehu Zubiri</Typography>
     </Box>
   );
 };
