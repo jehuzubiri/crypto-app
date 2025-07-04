@@ -1,0 +1,60 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body.light-mode {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body.dark-mode {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: "Inter", sans-serif !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar-track {
+  background: lightgrey;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: darkgray;
+}
+
+::-webkit-scrollbar {
+  width: 0.125rem;
+}

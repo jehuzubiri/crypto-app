@@ -1,6 +1,6 @@
-# CoinMarketCap Crypto Tracker (Next.js + Redux)
+# Crypto Portfolio Tracker | CoinMarketCap
 
-A simple cryptocurrency tracker built with **Next.js**, **Redux**, and **Axios**, using data from the CoinMarketCap API.
+A simple cryptocurrency tracker built with **Next.js**, **Redux**, and **Axios**, using data from the **CoinMarketCap API**.
 
 ## Features
 
