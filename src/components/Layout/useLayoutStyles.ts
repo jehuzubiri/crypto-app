@@ -3,7 +3,7 @@ import { MergedThemeOptions } from "@/models/Theme.model";
 import { TheAnyTheme } from "@/models/General.model";
 
 import mediaQuery from "@/theme/MediaQuery";
-import useHeaderScrollHook from "./hooks/HeaderScroll.hook";
+import useHeaderScrollHook from "./useCheckScrollHook";
 
 type StyleProps = {
   headerHeight?: number;
@@ -11,7 +11,7 @@ type StyleProps = {
 };
 
 const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
-  const { scrolled } = useHeaderScrollHook();
+  const scrolled = useHeaderScrollHook();
   const theme: MergedThemeOptions = useTheme();
 
   const { TABLET: TABLET_above } = mediaQuery("up");

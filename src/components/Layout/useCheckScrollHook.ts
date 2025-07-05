@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useHeaderScrollHook = (scrollVal: number = 30): { scrolled: boolean } => {
+const useCheckScrollHook = (scrollVal: number = 30): boolean => {
   const [scrolled, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const useHeaderScrollHook = (scrollVal: number = 30): { scrolled: boolean } => {
     };
   }, [scrollVal]);
 
-  return { scrolled };
+  return scrolled;
 };
 
-export default useHeaderScrollHook;
+export default useCheckScrollHook;

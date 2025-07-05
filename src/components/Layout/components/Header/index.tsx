@@ -8,7 +8,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { Dropdown, ThemeSwitch } from "@/components/General";
 import { AppAssetImages } from "@/constant/App.const";
 
-import useHeaderHeightHook from "../../hooks/HeaderHeight.hook";
+import useHeaderHeightHook from "../../useHeaderHeightHook";
 import useStyle from "../../useLayoutStyles";
 import useHeaderHooks from "./useHeaderHooks";
 
