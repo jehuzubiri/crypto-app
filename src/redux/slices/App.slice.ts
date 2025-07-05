@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { handleReducersPayload } from "@/utils/Store.helpers";
+import { AppDefaultFiatValue } from "@/constant/App.const";
 import {
   TypesAppSliceState,
+  TypesFiatKeys,
   TypesSelectedCrypto,
   TypesTableData,
 } from "@/models/Redux.model";
@@ -21,6 +23,10 @@ const initialListState: TypesTableData = {
 const initialState: TypesAppSliceState = {
   portfolio: initialListState,
   cryptos: initialListState,
+  fiatKeys: {
+    selected: AppDefaultFiatValue,
+    list: [AppDefaultFiatValue],
+  },
   selectedCrypto: {
     data: null,
     open: false,
@@ -32,6 +38,13 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    setFiatKeys: (state, action: PayloadAction<Partial<TypesFiatKeys>>) => {
+      state.fiatKeys = handleReducersPayload(
+        "fiatKeys",
+        state,
+        action
+      ) as TypesFiatKeys;
+    },
     setProtfolio: (state, action: PayloadAction<Partial<TypesTableData>>) => {
       state.portfolio = handleReducersPayload(
         "portfolio",
@@ -60,5 +73,6 @@ const appSlice = createSlice({
 });
 
 const { reducer, actions } = appSlice;
-export const { setProtfolio, setCryptos, setSelectedCrypto } = actions;
+export const { setFiatKeys, setProtfolio, setCryptos, setSelectedCrypto } =
+  actions;
 export default reducer;

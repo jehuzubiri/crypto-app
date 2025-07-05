@@ -12,7 +12,7 @@ const getTheme = (mode: "light" | "dark") => {
         default: mode === "light" ? "#ffffff" : "#0E0F18",
       },
       text: {
-        primary: mode === "light" ? "#171717" : "#ededed",
+        primary: mode === "light" ? "#001e3c" : "#D1D5DB",
       },
       info: {
         main: "#0057FF",
@@ -27,15 +27,15 @@ const getTheme = (mode: "light" | "dark") => {
         main: mode === "light" ? "#F2383A" : "#FC3044",
       },
       grey: {
-        100: "#f1f5f9",
-        200: "#e2e8f0",
-        300: "#cbd5e1",
-        400: "#94a3b8",
-        500: "#64748b",
-        600: "#475569",
-        700: "#334155",
-        800: "#1e293b",
-        900: "#0f172a",
+        100: mode === "light" ? "#f1f5f9" : "#1A1B23",
+        200: mode === "light" ? "#e2e8f0" : "#20212B",
+        300: mode === "light" ? "#cbd5e1" : "#262833",
+        400: mode === "light" ? "#94a3b8" : "#2D2F3B",
+        500: mode === "light" ? "#64748b" : "#353848",
+        600: mode === "light" ? "#475569" : "#3E4153",
+        700: mode === "light" ? "#334155" : "#494C61",
+        800: mode === "light" ? "#1e293b" : "#54566D",
+        900: mode === "light" ? "#0f172a" : "#60637B",
       },
     },
     breakpoints: {

@@ -7,6 +7,7 @@ import {
   useState,
   useMemo,
   ReactNode,
+  useCallback,
 } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -33,31 +34,31 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<ThemeModes>("light");
   const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("theme-mode") as ThemeModes | null;
-    if (stored) {
-      setMode(stored);
-    } else {
-      const prefersLight = window.matchMedia(
-        "(prefers-color-scheme: light)"
-      ).matches;
-      setMode(prefersLight ? "light" : "dark");
-    }
-    setIsMounted(true);
-  }, []);
-
-  const toggleTheme = () => {
-    const newMode = mode === "light" ? "dark" : "light";
-    setMode(newMode);
-    localStorage.setItem("theme-mode", newMode);
-  };
+  const theme = useMemo(() => getTheme(mode), [mode]);
 
   const setThemeMode = (newMode: ThemeModes) => {
     setMode(newMode);
     localStorage.setItem("theme-mode", newMode);
   };
 
-  const theme = useMemo(() => getTheme(mode), [mode]);
+  const toggleTheme = useCallback(() => {
+    const newMode = mode === "light" ? "dark" : "light";
+    setMode(newMode);
+    localStorage.setItem("theme-mode", newMode);
+  }, [mode]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("theme-mode") as ThemeModes | null;
+
+    if (!stored) {
+      const prefersLight = window.matchMedia(
+        "(prefers-color-scheme: light)"
+      ).matches;
+      setMode(prefersLight ? "light" : "dark");
+    } else setMode(stored);
+
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (typeof document !== "undefined") {

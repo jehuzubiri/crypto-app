@@ -13,3 +13,10 @@ export const AppConfig = {
   metaTitle: siteName,
   metaDescription: `${siteName} is the lorem ipsum dolor amet sample description here.`,
 };
+
+export const AppAssetImages = {
+  logo: "/assets/coin-logo.svg",
+  avatar: "/assets/avatar.svg",
+};
+
+export const AppDefaultFiatValue = "USD";

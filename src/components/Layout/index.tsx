@@ -1,14 +1,28 @@
 "use client";
 
+import { useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { StrictMode, FC, ReactNode, useEffect, useState } from "react";
 
 import { LayoutFooter, LayoutHeader } from "./components";
+import { TheAnyConst } from "@/models/General.model";
+import { setFiatKeys } from "@/redux/slices/App.slice";
 import useStyle from "./useLayoutStyles";
 
-const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
+const MainLayout: FC<{ children: ReactNode; fiatKeys: TheAnyConst }> = ({
+  children,
+  fiatKeys,
+}) => {
+  const dispatch = useDispatch();
   const [headerHeight, setHeaderHeight] = useState<number>(0);
   const style = useStyle({ headerHeight });
+
+  useEffect(() => {
+    if (fiatKeys?.ok && fiatKeys?.data?.length) {
+      const list = fiatKeys.data.map((item: TheAnyConst) => item?.symbol);
+      dispatch(setFiatKeys({ list }));
+    }
+  }, [fiatKeys]);
 
   useEffect(() => {
     const updateHeight = () => {

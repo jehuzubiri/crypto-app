@@ -18,8 +18,14 @@ export interface TypesTableData {
   };
 }
 
+export interface TypesFiatKeys {
+  selected: string | "USD";
+  list: string[];
+}
+
 export interface TypesAppSliceState {
   portfolio: TypesTableData;
   cryptos: TypesTableData;
+  fiatKeys: TypesFiatKeys;
   selectedCrypto: TypesSelectedCrypto;
 }

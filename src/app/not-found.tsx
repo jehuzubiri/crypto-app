@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouterPush } from "@/hooks/RouterPush.hook";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const routerPush = useRouterPush();
+  const router = useRouter();
 
   useEffect(() => {
-    routerPush("/");
+    router.push("/");
   }, []);
 
   return <></>;

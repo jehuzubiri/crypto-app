@@ -30,7 +30,6 @@ export type CustomImageType = {
 };
 export interface CustomThemeOptions {
   cxTypography: {
-    caption: FontStyleType;
     header: FontStyleType;
     subHeader: FontStyleType;
     paragraph: FontStyleType;

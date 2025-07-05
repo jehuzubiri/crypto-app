@@ -1,11 +1,13 @@
 "use client";
 
-import { Box } from "@mui/material";
-import { FC, useRef, useEffect, useState, memo } from "react";
+import Image from "next/image";
+import { Box, Typography } from "@mui/material";
+import React, { FC, useRef, useEffect, useState, memo } from "react";
 
+import { ThemeSwitch } from "@/components/General";
+import { AppAssetImages } from "@/constant/App.const";
 import { useThemeContext } from "@/theme/ThemeContext";
 import useHeaderHeightHook from "../../hooks/HeaderHeight.hook";
-import useAuthListenerHook from "../../hooks/AuthListener.hook";
 import useStyle from "../../useLayoutStyles";
 
 const LayoutHeader: FC = () => {
@@ -13,12 +15,14 @@ const LayoutHeader: FC = () => {
   const [positionType, setPositionType] = useState<"sticky" | "fixed">(
     "sticky"
   );
-
-  const style = useStyle({ position: positionType });
-  const { setThemeMode, mode } = useThemeContext();
-
   useHeaderHeightHook(headerRef);
-  useAuthListenerHook();
+
+  const { setThemeMode, mode } = useThemeContext();
+  const style = useStyle({ position: positionType });
+
+  const handleThemeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setThemeMode(event.target.checked ? "dark" : "light");
+  };
 
   useEffect(() => {
     setPositionType("fixed");
@@ -26,10 +30,25 @@ const LayoutHeader: FC = () => {
 
   return (
     <Box component="header" ref={headerRef} sx={style.header}>
-      <p>Main Layout Header</p>
-      <button
-        onClick={() => setThemeMode(mode === "light" ? "dark" : "light")}
-      >{`Switch to ${mode === "light" ? "dark" : "light"} mode`}</button>
+      <Box>
+        <Image
+          src={AppAssetImages.logo}
+          width={40}
+          height={40}
+          alt="Test Alternative Text"
+        />
+        <Box>
+          <Typography>Crypto Tracker</Typography>
+          <Typography>NextJS/TypeScript with CoinMarketCap</Typography>
+        </Box>
+      </Box>
+      <Box>
+        <ThemeSwitch
+          className="switch"
+          checked={mode === "dark"}
+          onChange={handleThemeSwitch}
+        />
+      </Box>
     </Box>
   );
 };

@@ -4,6 +4,7 @@ A simple cryptocurrency tracker built with **Next.js**, **Redux**, and **Axios**
 
 ## Features
 
+- Theme (Light/Dark Mode)
 - Cryptocurrency List Page (SSR)
 - Cryptocurrency Detail Page (CSR)
 - Add to Portfolio (via Modal)

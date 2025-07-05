@@ -3,6 +3,7 @@
 import { memo, useCallback, useEffect } from "react";
 import { TheAnyConst } from "@/models/General.model";
 import { getAllCurrencies, getCryptoLogos } from "@/services/apis";
+import { Box, Typography } from "@mui/material";
 
 const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
   const testGet = useCallback(
@@ -36,10 +37,9 @@ const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
   }, [crptoList]);
 
   return (
-    <section style={{ minHeight: "0" }}>
-      <h1>Home Page</h1>
-      <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}></div>
-    </section>
+    <Box component="section" style={{ minHeight: "0" }}>
+      <Typography>Home Page</Typography>
+    </Box>
   );
 };
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AppConfig } from "@/constant/App.const";
+// import { getFiatCurrencies } from "@/services/apis";
 import Providers from "@/components/Provider";
 import MainLayout from "@/components/Layout";
 
@@ -10,7 +11,7 @@ import "@/styles/global.css";
 const geistSans = localFont({
   src: "../../public/fonts/inter/Inter-Italic-VariableFont_opsz_wght.ttf",
   variable: "--font-inter-italic",
-  weight: "100 900",
+  weight: "100 200 300 400 500 600 700 800 900",
   style: "italic",
   display: "swap",
 });
@@ -18,7 +19,7 @@ const geistSans = localFont({
 const geistMono = localFont({
   src: "../../public/fonts/inter/Inter-VariableFont_opsz_wght.ttf",
   variable: "--font-inter-variable",
-  weight: "100 900",
+  weight: "100 200 300 400 500 600 700 800 900",
   display: "swap",
 });
 
@@ -31,25 +32,40 @@ export const metadata: Metadata = {
   },
 };
 
-async function gerServerSide(): Promise<void> {
-  //@TODO: LOAD ON LAYOUT SSR MODE
-  // > 1. get settings
-  // > 2. check if settings return res.data.system.is_maintenance
-  // > 3. return Maintenance Component
-}
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  gerServerSide();
-
+  // const fiatKeys = await getFiatCurrencies();
+  const fiatKeys = {
+    ok: true,
+    data: [
+      {
+        id: 2781,
+        name: "United States Dollar",
+        sign: "$",
+        symbol: "USD",
+      },
+      {
+        id: 2782,
+        name: "Australian Dollar",
+        sign: "$",
+        symbol: "AUD",
+      },
+      {
+        id: 2783,
+        name: "Brazilian Real",
+        sign: "R$",
+        symbol: "BRL",
+      },
+    ],
+  };
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
-          <MainLayout>{children}</MainLayout>
+          <MainLayout fiatKeys={fiatKeys}>{children}</MainLayout>
         </Providers>
       </body>
     </html>

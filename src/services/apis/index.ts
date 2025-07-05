@@ -1,5 +1,7 @@
+import { AppDefaultFiatValue } from "@/constant/App.const";
 import API_MAIN from "@/services";
 
+//CSR ===== start =====
 export const getAllCurrencies = async (
   params: Object | null = {},
   signal?: AbortSignal
@@ -15,12 +17,12 @@ export const getAllCurrencies = async (
   return await API_MAIN.postProxy(
     "cryptocurrency/listings/latest",
     {
-      start: 1, // Pagination start
-      limit: 100, // Max 100 per call
-      convert: "USD", // Currency
-      sort: "market_cap", // or 'price', 'volume_24h'
-      sort_dir: "desc", // descending
-      cryptocurrency_type: "coins", // 'all' | 'coins' | 'tokens'
+      start: 1,
+      limit: 50,
+      convert: "USD",
+      sort: "market_cap",
+      sort_dir: "desc",
+      cryptocurrency_type: "coins",
     },
     signal
   );
@@ -38,12 +40,17 @@ export const getCryptoLogos = async (
   );
 };
 
+//SSR ===== start =====
+export const getFiatCurrencies = async () => {
+  return await API_MAIN.postProxySSR("fiat/map");
+};
+
 export const getSSRLatestCryptos = async () => {
   return await API_MAIN.postProxySSR("cryptocurrency/listings/latest", {
-    start: 1, // Pagination start
-    limit: 100, // Max 100 per call
-    convert: "USD", // Currency
-    sort: "market_cap", // or 'price', 'volume_24h'
+    start: 1, // initial page
+    limit: 50, // 50 items per page
+    convert: AppDefaultFiatValue, // currency: default is USD
+    sort: "market_cap", // 'price' | 'volume_24h'
     sort_dir: "desc", // descending
     cryptocurrency_type: "coins", // 'all' | 'coins' | 'tokens'
   });

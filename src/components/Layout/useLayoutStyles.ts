@@ -15,18 +15,24 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
   const theme: MergedThemeOptions = useTheme();
 
   const { TABLET: TABLET_above } = mediaQuery("up");
+  const { MOBILE: MOBILE_above } = mediaQuery("up");
   const { MOBILE: MOBILE_below } = mediaQuery("down");
   const hideMenus = useMediaQuery(MOBILE_below);
 
   return {
     hideMenus,
     root: {
-      border: `1px solid green`,
+      ...theme?.cxFlexBox?.colCenter,
       marginTop: `${headerHeight}px`,
+      minHeight: "35rem",
+      padding: "0.75rem 1rem",
+      [TABLET_above]: {
+        padding: "1rem 1.5rem",
+      },
     },
     header: {
       ...theme?.cxFlexBox?.rowCenterBetween,
-      borderBottom: `1px solid ${theme.palette?.grey?.[scrolled ? 600 : 300]}`,
+      borderBottom: `1px solid ${theme.palette?.grey?.[scrolled ? 300 : 300]}`,
       backgroundColor: theme.palette?.background,
       position,
       padding: "0.75rem 1rem",
@@ -35,16 +41,45 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
       [TABLET_above]: {
         padding: "1rem 1.5rem",
       },
+      // Logo and Title
+      "& > div:nth-of-type(1)": {
+        ...theme?.cxFlexBox?.rowCenter,
+        gap: "0.5rem",
+        "& > div": {
+          display: "none",
+          [MOBILE_above]: {
+            ...theme?.cxFlexBox?.col,
+          },
+          "& > p:nth-of-type(1)": {
+            ...theme.cxTypography.subHeader,
+            color: theme.palette?.text,
+          },
+          "& > p:nth-of-type(2)": {
+            ...theme.cxTypography.paragraph,
+            color: theme.palette?.text,
+          },
+        },
+      },
+      // User Settings
+      "& > div:nth-of-type(2)": {
+        ...theme?.cxFlexBox?.rowCenter,
+        gap: "0.5rem",
+        "& > .switch": {
+          marginRight: "-7px",
+        },
+      },
     },
     footer: {
-      border: `1px solid ${theme.palette?.grey?.[300]}`,
+      ...theme?.cxFlexBox?.colCenter,
+      borderTop: `1px solid ${theme.palette?.grey?.[300]}`,
       padding: "0.75rem 1rem",
       [TABLET_above]: {
         padding: "1rem 1.5rem",
       },
       "& > p": {
-        ...theme.cxTypography.paragraph,
+        ...theme.cxTypography.tag,
         color: theme.palette?.text,
+        textAlign: "center",
       },
     },
   };

@@ -19,17 +19,10 @@ export const customTheme: CustomThemeOptions = {
   },
   //@DESC: type-class-name {...theme.cxTypography.<key>}
   cxTypography: {
-    caption: {
-      color: "white",
-      fontSize: "2.25em",
-      fontWeight: "700",
-      lineHeight: "1.6em",
-      letterSpacing: "0.01em",
-    },
     header: {
       color: "white",
-      fontSize: "1.75em",
-      fontWeight: "700",
+      fontSize: "1.5em",
+      fontWeight: "800",
       lineHeight: "1.8125em",
       letterSpacing: "0.01em",
     },
