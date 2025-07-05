@@ -27,5 +27,5 @@ cd crypto-app
 
 npm i
 npm i -g env-cmd
-npm run dev
+npm run development
 ```
