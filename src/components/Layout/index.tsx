@@ -19,8 +19,11 @@ const MainLayout: FC<{ children: ReactNode; fiatKeys: TheAnyConst }> = ({
 
   useEffect(() => {
     if (fiatKeys?.ok && fiatKeys?.data?.length) {
-      const list = fiatKeys.data.map((item: TheAnyConst) => item?.symbol);
-      dispatch(setFiatKeys({ list }));
+      const menu = {};
+      fiatKeys.data.forEach((item: TheAnyConst) => {
+        menu[item.symbol] = `${item.name} (${item.symbol})`;
+      });
+      dispatch(setFiatKeys({ menu }));
     }
   }, [fiatKeys]);
 

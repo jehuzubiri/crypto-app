@@ -13,7 +13,6 @@ const initialListState: TypesTableData = {
   logos: null,
   loading: false,
   sortBy: "amount",
-  searchQuery: "",
   pagination: {
     page: 1,
     total: 0,
@@ -21,11 +20,14 @@ const initialListState: TypesTableData = {
 };
 
 const initialState: TypesAppSliceState = {
+  searchQuery: "",
   portfolio: initialListState,
   cryptos: initialListState,
   fiatKeys: {
     selected: AppDefaultFiatValue,
-    list: [AppDefaultFiatValue],
+    menu: {
+      [AppDefaultFiatValue]: "United States Dollar (USD)",
+    },
   },
   selectedCrypto: {
     data: null,

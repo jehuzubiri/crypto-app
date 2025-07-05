@@ -11,7 +11,6 @@ export interface TypesTableData {
   logos: null | Object;
   loading: boolean;
   sortBy: "amount" | "market_cap";
-  searchQuery: string;
   pagination: {
     page: number;
     total: number;
@@ -20,10 +19,15 @@ export interface TypesTableData {
 
 export interface TypesFiatKeys {
   selected: string | "USD";
-  list: string[];
+  menu:
+    | Object
+    | {
+        USD: "United States Dollar (USD)";
+      };
 }
 
 export interface TypesAppSliceState {
+  searchQuery: string;
   portfolio: TypesTableData;
   cryptos: TypesTableData;
   fiatKeys: TypesFiatKeys;

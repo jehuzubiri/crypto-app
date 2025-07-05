@@ -2,31 +2,29 @@
 
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
-import React, { FC, useRef, useEffect, useState, memo } from "react";
+import { FC, useRef, memo } from "react";
 
-import { ThemeSwitch } from "@/components/General";
+import { FaChevronDown } from "react-icons/fa";
+import { Dropdown, ThemeSwitch } from "@/components/General";
 import { AppAssetImages } from "@/constant/App.const";
-import { useThemeContext } from "@/theme/ThemeContext";
+
 import useHeaderHeightHook from "../../hooks/HeaderHeight.hook";
 import useStyle from "../../useLayoutStyles";
+import useHeaderHooks from "./useHeaderHooks";
 
 const LayoutHeader: FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
-  const [positionType, setPositionType] = useState<"sticky" | "fixed">(
-    "sticky"
-  );
+
   useHeaderHeightHook(headerRef);
-
-  const { setThemeMode, mode } = useThemeContext();
+  const {
+    isChecked,
+    selectedFiat,
+    fiatMenuOpen,
+    positionType,
+    handleThemeSwitch,
+    setFiatMenuOpen,
+  } = useHeaderHooks();
   const style = useStyle({ position: positionType });
-
-  const handleThemeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setThemeMode(event.target.checked ? "dark" : "light");
-  };
-
-  useEffect(() => {
-    setPositionType("fixed");
-  }, []);
 
   return (
     <Box component="header" ref={headerRef} sx={style.header}>
@@ -43,9 +41,20 @@ const LayoutHeader: FC = () => {
         </Box>
       </Box>
       <Box>
+        <Dropdown
+          className="fiat-dropdown"
+          open={fiatMenuOpen}
+          setOpen={setFiatMenuOpen}
+          content={<Box>Test</Box>}
+        >
+          <Box>
+            <Typography>{selectedFiat}</Typography>
+            <FaChevronDown />
+          </Box>
+        </Dropdown>
         <ThemeSwitch
           className="switch"
-          checked={mode === "dark"}
+          checked={isChecked}
           onChange={handleThemeSwitch}
         />
       </Box>

@@ -63,9 +63,22 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
       // User Settings
       "& > div:nth-of-type(2)": {
         ...theme?.cxFlexBox?.rowCenter,
-        gap: "0.5rem",
+        gap: "0.75rem",
         "& > .switch": {
           marginRight: "-7px",
+        },
+        "& > .fiat-dropdown > div > div": {
+          ...theme?.cxFlexBox?.rowCenter,
+          gap: "0.25rem",
+          "& > p": {
+            ...theme.cxTypography.paragraph,
+            color: theme.palette?.text,
+          },
+          "& > svg": {
+            height: "0.875rem",
+            width: "0.875rem",
+            color: theme.palette?.text,
+          },
         },
       },
     },
