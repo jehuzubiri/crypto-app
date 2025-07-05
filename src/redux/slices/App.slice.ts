@@ -8,9 +8,14 @@ import {
 
 const initialListState: TypesTableData = {
   list: [],
+  logos: null,
   loading: false,
   sortBy: "amount",
   searchQuery: "",
+  pagination: {
+    page: 1,
+    total: 0,
+  },
 };
 
 const initialState: TypesAppSliceState = {

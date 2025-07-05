@@ -1,19 +1,46 @@
-import { Metadata } from "next";
-import { AppConfig } from "@/constant/App.const";
+"use client";
 
-export const metadata: Metadata = {
-  title: AppConfig.metaTitle || "Terragon FE",
-  description: AppConfig.metaDescription,
-};
+import { memo, useCallback, useEffect } from "react";
+import { TheAnyConst } from "@/models/General.model";
+import { getAllCurrencies, getCryptoLogos } from "@/services/apis";
 
-const HomePage: React.FC<{ data: string }> = ({ data }) => {
+const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
+  const testGet = useCallback(
+    async (signal?: AbortSignal) => {
+      try {
+        if (signal?.aborted) return;
+        if (!crptoList?.ok || !crptoList?.data?.length) return;
+
+        const ids = crptoList?.data?.map((item: TheAnyConst) => item.id);
+        const logos = await getCryptoLogos(ids, signal);
+        // const sample = await getAllCurrencies({}, signal);
+        if (logos?.ok) {
+          console.log({ cryptos: crptoList?.data });
+          console.log({ cryptoLogos: logos });
+        }
+      } catch (error) {
+        console.error({ ERROR_PAGE_HOME_GET_CRYPTO_LOGOS: error });
+      }
+    },
+    [crptoList]
+  );
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    testGet(signal);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [crptoList]);
+
   return (
     <section style={{ minHeight: "0" }}>
       <h1>Home Page</h1>
-      <p>{`${data} ${1}`}</p>
       <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}></div>
     </section>
   );
 };
 
-export default HomePage;
+export default memo(HomePage);

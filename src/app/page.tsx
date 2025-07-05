@@ -1,20 +1,16 @@
-"use client";
-
-import { TheAnyConst } from "@/models/General.model";
-import { AppConfig } from "@/constant/App.const";
 import HomePage from "@/pages/Home";
+// import { getSSRLatestCryptos } from "@/services/apis";
 
-async function getServerSide(): Promise<TheAnyConst> {
-  //@DESC: SSR apis here...
-  return {};
-}
+export default async function Page() {
+  // const crptoList = await getSSRLatestCryptos();
 
-export default function Page() {
-  const {} = getServerSide();
-
+  // return <HomePage crptoList={crptoList} />;
   return (
     <HomePage
-      data={`market_code: ${AppConfig.appName} & HOME PAGE current value is:`}
+      crptoList={{
+        ok: true,
+        data: [],
+      }}
     />
   );
 }

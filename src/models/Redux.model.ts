@@ -8,9 +8,14 @@ export interface TypesSelectedCrypto {
 
 export interface TypesTableData {
   list: TheAnyConst[];
+  logos: null | Object;
   loading: boolean;
   sortBy: "amount" | "market_cap";
   searchQuery: string;
+  pagination: {
+    page: number;
+    total: number;
+  };
 }
 
 export interface TypesAppSliceState {
