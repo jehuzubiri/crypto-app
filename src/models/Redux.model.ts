@@ -3,13 +3,13 @@ import { TheAnyConst } from "./General.model";
 export interface TypesSelectedCrypto {
   data: null | Object;
   loading: boolean;
-  open: boolean;
 }
 
 export interface TypesTableData {
   list: TheAnyConst[];
   logos: null | Object;
   loading: boolean;
+  logoIsLoading: boolean;
   sortBy: "amount" | "market_cap";
   pagination: {
     page: number;
@@ -30,6 +30,7 @@ export interface TypesAppSliceState {
   searchQuery: string;
   portfolio: TypesTableData;
   cryptos: TypesTableData;
+  trending: TypesTableData;
   fiatKeys: TypesFiatKeys;
   selectedCrypto: TypesSelectedCrypto;
 }

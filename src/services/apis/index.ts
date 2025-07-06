@@ -41,11 +41,20 @@ export const getCryptoLogos = async (
 };
 
 //SSR ===== start =====
-export const getFiatCurrencies = async () => {
+export const getFiatCurrenciesSSR = async () => {
   return await API_MAIN.postProxySSR("fiat/map");
 };
 
-export const getSSRLatestCryptos = async () => {
+export const getTrendingCryptosSSR = async () => {
+  return await API_MAIN.postProxySSR("cryptocurrency/listings/latest", {
+    convert: AppDefaultFiatValue,
+    sort: "percent_change_24h",
+    sort_dir: "desc",
+    limit: 5,
+  });
+};
+
+export const getLatestCryptosSSR = async () => {
   return await API_MAIN.postProxySSR("cryptocurrency/listings/latest", {
     start: 1, // initial page
     limit: 50, // 50 items per page

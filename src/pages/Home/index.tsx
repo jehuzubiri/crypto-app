@@ -1,46 +1,20 @@
 "use client";
 
-import { memo, useCallback, useEffect } from "react";
+import React from "react";
 import { TheAnyConst } from "@/models/General.model";
-import { getCryptoLogos } from "@/services/apis";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import useStyles from "./useHomeStyles";
-import { useDispatch } from "react-redux";
 
 import { CryptoChart, MainCryptos, TrendingCryptos } from "./components";
+import useHomeHooks from "./useHomeHooks";
 
-const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
-  const dispatch = useDispatch();
+const HomePage: React.FC<{
+  cryptoList: TheAnyConst;
+  cryptoTrending: TheAnyConst;
+}> = ({ cryptoList, cryptoTrending }) => {
   const style = useStyles();
 
-  const getCacheCryptoLogos = useCallback(
-    async (signal?: AbortSignal) => {
-      try {
-        if (signal?.aborted) return;
-        if (!crptoList?.ok || !crptoList?.data?.length) return;
-
-        const ids = crptoList?.data?.map((item: TheAnyConst) => item.id);
-        const logos = await getCryptoLogos(ids, signal);
-        if (logos?.ok) {
-          console.log({ cryptos: crptoList?.data });
-          console.log({ cryptoLogos: logos });
-        }
-      } catch (error) {
-        console.error({ ERROR_PAGE_HOME_GET_CRYPTO_LOGOS: error });
-      }
-    },
-    [crptoList]
-  );
-
-  useEffect(() => {
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-    getCacheCryptoLogos(signal);
-
-    return () => {
-      abortController.abort();
-    };
-  }, [crptoList]);
+  const {} = useHomeHooks(cryptoList, cryptoTrending);
 
   return (
     <Box component="section" sx={style.root}>
@@ -53,4 +27,4 @@ const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
   );
 };
 
-export default memo(HomePage);
+export default React.memo(HomePage);

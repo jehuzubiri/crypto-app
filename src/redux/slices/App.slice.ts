@@ -12,6 +12,7 @@ const initialListState: TypesTableData = {
   list: [],
   logos: null,
   loading: false,
+  logoIsLoading: false,
   sortBy: "amount",
   pagination: {
     page: 1,
@@ -23,6 +24,7 @@ const initialState: TypesAppSliceState = {
   searchQuery: "",
   portfolio: initialListState,
   cryptos: initialListState,
+  trending: initialListState,
   fiatKeys: {
     selected: AppDefaultFiatValue,
     menu: {
@@ -31,7 +33,6 @@ const initialState: TypesAppSliceState = {
   },
   selectedCrypto: {
     data: null,
-    open: false,
     loading: false,
   },
 };
@@ -61,6 +62,16 @@ const appSlice = createSlice({
         action
       ) as TypesTableData;
     },
+    setTrendingCryptos: (
+      state,
+      action: PayloadAction<Partial<TypesTableData>>
+    ) => {
+      state.trending = handleReducersPayload(
+        "trending",
+        state,
+        action
+      ) as TypesTableData;
+    },
     setSelectedCrypto: (
       state,
       action: PayloadAction<Partial<TypesSelectedCrypto>>
@@ -75,6 +86,11 @@ const appSlice = createSlice({
 });
 
 const { reducer, actions } = appSlice;
-export const { setFiatKeys, setProtfolio, setCryptos, setSelectedCrypto } =
-  actions;
+export const {
+  setCryptos,
+  setFiatKeys,
+  setProtfolio,
+  setSelectedCrypto,
+  setTrendingCryptos,
+} = actions;
 export default reducer;

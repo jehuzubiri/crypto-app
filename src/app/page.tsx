@@ -1,18 +1,18 @@
 import HomePage from "@/pages/Home";
-// import { getSSRLatestCryptos } from "@/services/apis";
+// import { getLatestCryptosSSR, getTrendingCryptosSSR } from "@/services/apis";
+import {
+  dummyApiCryptoList,
+  dummyApiCryptoTrending,
+} from "@/constant/Dummy.const";
 
 export default async function Page() {
-  console.log("Page component is being rendered");
+  // const cryptoList = await getLatestCryptosSSR();
+  // const cryptoTrending = await getTrendingCryptosSSR();
 
-  // const crptoList = await getSSRLatestCryptos();
-
-  // return <HomePage crptoList={crptoList} />;
   return (
     <HomePage
-      crptoList={{
-        ok: true,
-        data: [],
-      }}
+      cryptoList={dummyApiCryptoList}
+      cryptoTrending={dummyApiCryptoTrending}
     />
   );
 }
