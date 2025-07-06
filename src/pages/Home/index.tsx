@@ -2,11 +2,18 @@
 
 import { memo, useCallback, useEffect } from "react";
 import { TheAnyConst } from "@/models/General.model";
-import { getAllCurrencies, getCryptoLogos } from "@/services/apis";
+import { getCryptoLogos } from "@/services/apis";
 import { Box, Typography } from "@mui/material";
+import useStyles from "./useHomeStyles";
+import { useDispatch } from "react-redux";
+
+import { CryptoChart, MainCryptos, TrendingCryptos } from "./components";
 
 const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
-  const testGet = useCallback(
+  const dispatch = useDispatch();
+  const style = useStyles();
+
+  const getCacheCryptoLogos = useCallback(
     async (signal?: AbortSignal) => {
       try {
         if (signal?.aborted) return;
@@ -14,7 +21,6 @@ const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
 
         const ids = crptoList?.data?.map((item: TheAnyConst) => item.id);
         const logos = await getCryptoLogos(ids, signal);
-        // const sample = await getAllCurrencies({}, signal);
         if (logos?.ok) {
           console.log({ cryptos: crptoList?.data });
           console.log({ cryptoLogos: logos });
@@ -29,7 +35,7 @@ const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-    testGet(signal);
+    getCacheCryptoLogos(signal);
 
     return () => {
       abortController.abort();
@@ -37,8 +43,12 @@ const HomePage: React.FC<{ crptoList: TheAnyConst }> = ({ crptoList }) => {
   }, [crptoList]);
 
   return (
-    <Box component="section" style={{ minHeight: "0" }}>
-      <Typography>Home Page</Typography>
+    <Box component="section" sx={style.root}>
+      <Box>
+        <CryptoChart />
+        <TrendingCryptos />
+      </Box>
+      <MainCryptos />
     </Box>
   );
 };

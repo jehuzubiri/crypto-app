@@ -45,6 +45,7 @@ export interface CustomThemeOptions {
     rowCenter: FlexBoxType;
     colCenter: FlexBoxType;
     rowCenterCenter: FlexBoxType;
+    rowStartBetween: FlexBoxType;
     colCenterCenter: FlexBoxType;
     rowCenterBetween: FlexBoxType;
     colCenterBetween: FlexBoxType;

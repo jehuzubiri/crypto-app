@@ -73,6 +73,12 @@ export const customTheme: CustomThemeOptions = {
       alignItems: "center",
       justifyContent: "center",
     },
+    rowStartBetween: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "flex-start",
+      justifyContent: "space-between",
+    },
     colCenterCenter: {
       display: "flex",
       flexDirection: "column",

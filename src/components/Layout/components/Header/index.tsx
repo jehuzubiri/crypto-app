@@ -36,7 +36,7 @@ const LayoutHeader: React.FC = () => {
         />
         <Box>
           <Typography>Crypto Tracker</Typography>
-          <Typography>NextJS/TypeScript with CoinMarketCap</Typography>
+          <Typography>NextJS/TypeScript CoinMarketCap</Typography>
         </Box>
       </Box>
       <Box>
