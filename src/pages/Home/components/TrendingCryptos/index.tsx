@@ -21,7 +21,7 @@ const TrendingCryotos: React.FC = () => {
 
   return (
     <Box sx={styles.root}>
-      <p>Trending Cryptos</p>
+      <p>Trending Now</p>
       <Box className={isLoading ? "loading" : "list"}>
         {isLoading
           ? loadingItems.map((_, index) => (
@@ -67,7 +67,7 @@ const TrendingCryotos: React.FC = () => {
                 <Box key={`key${index}`} className="list-item">
                   <Box>
                     <Image
-                      src={logo.jehu || AppAssetImages.coin}
+                      src={logo.src || AppAssetImages.coin}
                       alt={logo.alt || "CoinMarketCap Crypto Logo"}
                       width={32}
                       height={32}

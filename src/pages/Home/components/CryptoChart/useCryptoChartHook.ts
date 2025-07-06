@@ -1,6 +1,8 @@
+import { useCallback, useEffect, useState } from "react";
+import { useThemeContext } from "@/theme/ThemeContext";
+
 import { AppRandomColors } from "@/constant/App.const";
 import { TheAnyConst } from "@/models/General.model";
-import { useState } from "react";
 
 interface Size {
   width: number;
@@ -29,9 +31,14 @@ const series = [
 const labels = ["1h", "24h", "7d", "30d", "60d", "90d"];
 
 const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
+  // const { cryptos, portfolio } = data;
+  const { mode } = useThemeContext();
+  const isLightMode = mode === "light";
+
   const [options, setOptions] = useState({
     chart: {
-      ...chartSize,
+      height: 300,
+      width: 300,
       type: "area",
       toolbar: { show: false },
     },
@@ -44,12 +51,21 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
     },
     xaxis: {
       categories: labels,
-      // title: { text: "Timeframe" },
+      labels: {
+        style: {
+          colors: "#001e3c",
+          fontSize: "12px",
+        },
+      },
     },
     yaxis: {
       // title: { text: "% Change" },
       labels: {
         formatter: (val: number) => `${val.toFixed(2)}%`,
+        style: {
+          colors: "#001e3c",
+          fontSize: "12px",
+        },
       },
     },
     tooltip: {
@@ -70,6 +86,49 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
       horizontalAlign: "left",
     },
   });
+
+  const updateOptionValues = useCallback(() => {
+    const colors = isLightMode ? "#001e3c" : "#D1D5DB";
+
+    setOptions((prev) => ({
+      ...prev,
+      colors: AppRandomColors.slice(0, series.length),
+      chart: {
+        ...prev.chart,
+        ...chartSize,
+      },
+      xaxis: {
+        ...prev.xaxis,
+        labels: {
+          ...prev.xaxis.labels,
+          style: {
+            ...prev.xaxis.labels.style,
+            colors,
+          },
+        },
+      },
+      yaxis: {
+        ...prev.yaxis,
+        labels: {
+          ...prev.yaxis.labels,
+          style: {
+            ...prev.yaxis.labels.style,
+            colors,
+          },
+        },
+      },
+      legend: {
+        ...prev.legend,
+        labels: {
+          colors,
+        },
+      },
+    }));
+  }, [chartSize, isLightMode, series.length]);
+
+  useEffect(() => {
+    updateOptionValues();
+  }, [chartSize, isLightMode, series.length]);
 
   return {
     options,
