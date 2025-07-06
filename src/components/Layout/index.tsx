@@ -21,7 +21,11 @@ const MainLayout: FC<{ children: ReactNode; fiatKeys: TheAnyConst }> = ({
     if (fiatKeys?.ok && fiatKeys?.data?.length) {
       const menu = {};
       fiatKeys.data.forEach((item: TheAnyConst) => {
-        menu[item.symbol] = `${item.name} (${item.symbol})`;
+        menu[item.symbol] = {
+          label: `${item.name} (${item.symbol})`,
+          symbol: item.symbol,
+          name: item.name,
+        };
       });
       dispatch(setFiatKeys({ menu }));
     }

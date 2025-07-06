@@ -1,7 +1,5 @@
-import { useSelector } from "react-redux";
 import { useEffect, useState, ChangeEvent } from "react";
 import { useThemeContext } from "@/theme/ThemeContext";
-import { RootState } from "@/redux/store";
 
 type TypesHeaderPosition = "sticky" | "fixed";
 interface TypesHeaderSettings {
@@ -10,9 +8,6 @@ interface TypesHeaderSettings {
 }
 
 const useHeaderHooks = () => {
-  const { fiatKeys } = useSelector((state: RootState) => state.app);
-  // const { selected, menu } = fiatKeys;
-
   const { setThemeMode, mode } = useThemeContext();
 
   const [fiatMenuOpen, setFiatMenuOpen] = useState<boolean>(false);
@@ -33,7 +28,6 @@ const useHeaderHooks = () => {
     positionType: headerSettings.positionType,
     fiatMenuOpen,
     isChecked: mode === "dark",
-    selectedFiat: fiatKeys.selected,
     handleThemeSwitch,
     setFiatMenuOpen,
   };

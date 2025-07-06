@@ -82,6 +82,36 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
         },
       },
     },
+    headerFiatMenu: {
+      ...theme?.cxFlexBox?.col,
+      width: "16rem",
+      "& > p": {
+        ...theme.cxTypography.tag,
+        color: theme.palette?.text,
+        paddingBottom: "0.5rem",
+        borderBottom: `1px solid ${theme.palette?.grey?.[200]}`,
+      },
+      "& > div": {
+        ...theme?.cxFlexBox?.col,
+        width: "100%",
+        overflowY: "auto",
+        maxHeight: "10rem",
+        padding: "0.25rem 0",
+        "& > p": {
+          ...theme.cxTypography.paragraph,
+          color: theme.palette?.text,
+          padding: "0.35rem 0.325rem",
+          cursor: "pointer",
+          "&:hover": {
+            backgroundColor: theme.palette?.grey?.[100],
+          },
+          "&.selected": {
+            backgroundColor: theme.palette?.grey?.[200],
+            fontWeight: 600,
+          },
+        },
+      },
+    },
     footer: {
       ...theme?.cxFlexBox?.colCenter,
       borderTop: `1px solid ${theme.palette?.grey?.[300]}`,

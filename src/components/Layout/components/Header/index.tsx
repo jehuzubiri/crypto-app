@@ -2,23 +2,22 @@
 
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
-import { FC, useRef, memo } from "react";
+import React, { useRef, memo } from "react";
 
-import { FaChevronDown } from "react-icons/fa";
-import { Dropdown, ThemeSwitch } from "@/components/General";
+import { ThemeSwitch } from "@/components/General";
 import { AppAssetImages } from "@/constant/App.const";
 
 import useHeaderHeightHook from "../../useHeaderHeightHook";
 import useStyle from "../../useLayoutStyles";
 import useHeaderHooks from "./useHeaderHooks";
+import FiatSelect from "./components/FiatSelect";
 
-const LayoutHeader: FC = () => {
+const LayoutHeader: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
 
   useHeaderHeightHook(headerRef);
   const {
     isChecked,
-    selectedFiat,
     fiatMenuOpen,
     positionType,
     handleThemeSwitch,
@@ -33,7 +32,7 @@ const LayoutHeader: FC = () => {
           src={AppAssetImages.logo}
           width={40}
           height={40}
-          alt="Test Alternative Text"
+          alt="Lorem Ipsum Logo"
         />
         <Box>
           <Typography>Crypto Tracker</Typography>
@@ -41,17 +40,10 @@ const LayoutHeader: FC = () => {
         </Box>
       </Box>
       <Box>
-        <Dropdown
-          className="fiat-dropdown"
-          open={fiatMenuOpen}
-          setOpen={setFiatMenuOpen}
-          content={<Box>Test</Box>}
-        >
-          <Box>
-            <Typography>{selectedFiat}</Typography>
-            <FaChevronDown />
-          </Box>
-        </Dropdown>
+        <FiatSelect
+          fiatMenuOpen={fiatMenuOpen}
+          setFiatMenuOpen={setFiatMenuOpen}
+        />
         <ThemeSwitch
           className="switch"
           checked={isChecked}
