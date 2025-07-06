@@ -1,11 +1,14 @@
 "use client";
-import ErrorPage from "@/pages/Error";
 
-type ErrorParams = {
-  error: Error;
-  reset: () => void;
-};
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export default function Error({ error, reset }: ErrorParams) {
-  return <ErrorPage error={error} reset={reset} />;
+export default function Page() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/");
+  }, []);
+
+  return <></>;
 }

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { TheAnyConst } from "@/models/General.model";
-import { ServicesApiResponse } from "@/models/Services.model";
+import { ServicesApiResponse } from "@/models/General.model";
 
 class API_MAIN {
   private rqx: AxiosInstance;
