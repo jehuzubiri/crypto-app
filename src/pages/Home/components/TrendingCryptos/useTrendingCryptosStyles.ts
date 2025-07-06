@@ -17,11 +17,15 @@ const useStyles = (): TheAnyTheme => {
       },
       "& > div.list": {
         ...theme?.cxFlexBox?.col,
-        gap: "1rem",
-        padding: "1rem 1rem 1.5rem 1rem",
+        padding: "0.5rem 0 1rem 0",
         // ITEM
         "& > div.list-item": {
           ...theme?.cxFlexBox?.rowStartBetween,
+          padding: "0.5rem 1rem",
+          cursor: "pointer",
+          "&:hover": {
+            backgroundColor: theme.palette?.grey?.[100],
+          },
           // ITEM -left
           "& > div:nth-of-type(1)": {
             ...theme?.cxFlexBox?.rowStartBetween,

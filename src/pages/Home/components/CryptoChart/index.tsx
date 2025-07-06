@@ -35,4 +35,4 @@ const CryptoChart: React.FC = () => {
   );
 };
 
-export default CryptoChart;
+export default React.memo(CryptoChart);

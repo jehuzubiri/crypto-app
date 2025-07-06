@@ -9,32 +9,15 @@ interface Size {
   height: number;
 }
 
-const series = [
-  {
-    name: "Bitcoin",
-    data: [0.03, 0.05, 0.97, 3.42, 15.76, 31.33],
-  },
-  {
-    name: "Ethereum Classic",
-    data: [0.02, 3.07, 5.2, 7.1, 12.3, 28.5],
-  },
-  {
-    name: "Ripple",
-    data: [-0.1, -1.9, 0.4, 2.3, 6.8, 12.1],
-  },
-  {
-    name: "Bitcoin Cash",
-    data: [-0.2, -3.05, -1.1, 0.5, 2.8, 6.7],
-  },
-];
-
 const labels = ["1h", "24h", "7d", "30d", "60d", "90d"];
 
 const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
-  // const { cryptos, portfolio } = data;
+  const { cryptos, portfolio } = data;
+
   const { mode } = useThemeContext();
   const isLightMode = mode === "light";
 
+  const [series, setSeries] = useState([]);
   const [options, setOptions] = useState({
     chart: {
       height: 300,
@@ -59,7 +42,6 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
       },
     },
     yaxis: {
-      // title: { text: "% Change" },
       labels: {
         formatter: (val: number) => `${val.toFixed(2)}%`,
         style: {
@@ -86,6 +68,23 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
       horizontalAlign: "left",
     },
   });
+
+  const transformCryptoData = (rawData: TheAnyConst) => {
+    return rawData.map((item: TheAnyConst) => {
+      const quote = item.quote?.USD || {};
+      const data = labels.map((label) => {
+        const key = `percent_change_${label.toLowerCase()}`;
+        return typeof quote[key] === "number"
+          ? Number(quote[key].toFixed(2))
+          : 0;
+      });
+
+      return {
+        name: item.name,
+        data,
+      };
+    });
+  };
 
   const updateOptionValues = useCallback(() => {
     const colors = isLightMode ? "#001e3c" : "#D1D5DB";
@@ -117,6 +116,13 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
           },
         },
       },
+      tooltip: {
+        ...prev.tooltip,
+        theme: mode,
+        y: {
+          formatter: (val: number) => `${val.toFixed(2)}%`,
+        },
+      },
       legend: {
         ...prev.legend,
         labels: {
@@ -126,9 +132,29 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
     }));
   }, [chartSize, isLightMode, series.length]);
 
+  const updateSeriesValue = useCallback(() => {
+    const portfolioList = Object.values(portfolio || {}) || [];
+    const cryptoList = cryptos?.list || [];
+    let newSeriesData = [];
+
+    if (!cryptoList?.length) return;
+
+    if (portfolioList?.length) {
+      newSeriesData = transformCryptoData(portfolioList);
+    } else {
+      newSeriesData = transformCryptoData(cryptoList.slice(0, 5));
+    }
+
+    setSeries(newSeriesData);
+  }, [cryptos?.list, portfolio]);
+
   useEffect(() => {
     updateOptionValues();
   }, [chartSize, isLightMode, series.length]);
+
+  useEffect(() => {
+    updateSeriesValue();
+  }, [cryptos?.list, portfolio]);
 
   return {
     options,

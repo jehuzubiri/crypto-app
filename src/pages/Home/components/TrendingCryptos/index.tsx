@@ -21,7 +21,7 @@ const TrendingCryotos: React.FC = () => {
 
   return (
     <Box sx={styles.root}>
-      <p>Trending Now</p>
+      <p>Trending Now (1hr)</p>
       <Box className={isLoading ? "loading" : "list"}>
         {isLoading
           ? loadingItems.map((_, index) => (
@@ -42,9 +42,9 @@ const TrendingCryotos: React.FC = () => {
               const logo = logos[data?.id] || null;
               const fiatCurrency = fiatKeys?.menu?.[selected] || { sign: "$" };
               const cryptoSymbol = data?.symbol || "";
-              const quoteChange = data?.quote.USD.percent_change_24h;
+              const quoteChange = data?.quote.USD.percent_change_1h;
               const isNegative = quoteChange <= 0;
-              const quoteChangePrefix = isNegative ? "-" : "+";
+              const quoteChangePrefix = isNegative ? "" : "+";
 
               const cryptoTotalSupply = fiatAmountDisplayFormatter(
                 data?.total_supply || 0
@@ -64,7 +64,11 @@ const TrendingCryotos: React.FC = () => {
               )} (${fiatAmountDisplayFormatter(quoteChange)}%)`;
 
               return (
-                <Box key={`key${index}`} className="list-item">
+                <Box
+                  key={`key${index}`}
+                  onClick={() => console.log({ ID: data?.id })}
+                  className="list-item"
+                >
                   <Box>
                     <Image
                       src={logo.src || AppAssetImages.coin}
@@ -89,4 +93,4 @@ const TrendingCryotos: React.FC = () => {
   );
 };
 
-export default TrendingCryotos;
+export default React.memo(TrendingCryotos);
