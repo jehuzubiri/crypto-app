@@ -4,15 +4,15 @@ import { TheAnyTheme } from "@/models/General.model";
 
 const useStyles = (): TheAnyTheme => {
   const theme: MergedThemeOptions = useTheme();
+  const isLightMode = theme.palette?.mode === "light";
 
   return {
     root: {
       "& > p": {
         ...theme.cxTypography.paragraph,
         fontWeight: 700,
-        color: theme.palette?.text,
-        backgroundColor: theme.palette?.grey?.[300],
-        borderBottom: `1px solid ${theme.palette?.grey?.[200]}`,
+        color: isLightMode ? theme.palette?.grey?.[100] : theme.palette?.text,
+        backgroundColor: theme.palette?.grey?.[isLightMode ? 500 : 400],
         padding: "0.75rem 1rem 0.5rem 1rem",
       },
       "& > div.list": {
@@ -46,7 +46,7 @@ const useStyles = (): TheAnyTheme => {
               },
               "& > p:nth-of-type(2)": {
                 ...theme.cxTypography.tag,
-                color: theme.palette?.grey?.[800],
+                color: theme.palette?.grey?.[isLightMode ? 400 : 900],
               },
             },
           },

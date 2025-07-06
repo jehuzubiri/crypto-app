@@ -10,6 +10,7 @@ type StyleProps = {
 
 const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
   const theme: MergedThemeOptions = useTheme();
+  const isLightMode = theme.palette?.mode === "light";
   const { TABLET, MOBILE } = mediaQuery("up");
 
   return {
@@ -26,7 +27,7 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
     header: {
       ...theme?.cxFlexBox?.rowCenterBetween,
       borderBottom: `1px solid ${theme.palette?.grey?.[300]}`,
-      backgroundColor: theme.palette?.background?.default,
+      backgroundColor: theme.palette?.background,
       position,
       padding: "0.75rem 1rem",
       width: "100%",
@@ -49,7 +50,8 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
           },
           "& > p:nth-of-type(2)": {
             ...theme.cxTypography.paragraph,
-            color: theme.palette?.text,
+            fontWeight: 500,
+            color: theme.palette?.grey?.[isLightMode ? 500 : 900],
           },
         },
       },
