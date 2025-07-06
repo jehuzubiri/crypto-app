@@ -7,7 +7,7 @@ export interface TypesSelectedCrypto {
 
 export interface TypesTableData {
   list: TheAnyConst[];
-  logos: null | Object;
+  logos: Object;
   loading: boolean;
   logoIsLoading: boolean;
   sortBy: "amount" | "market_cap";
@@ -28,7 +28,7 @@ export interface TypesFiatKeys {
 
 export interface TypesAppSliceState {
   searchQuery: string;
-  portfolio: TypesTableData;
+  portfolio: Object;
   cryptos: TypesTableData;
   trending: TypesTableData;
   fiatKeys: TypesFiatKeys;

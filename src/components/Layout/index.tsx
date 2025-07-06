@@ -25,6 +25,7 @@ const MainLayout: FC<{ children: ReactNode; fiatKeys: TheAnyConst }> = ({
           label: `${item.name} (${item.symbol})`,
           symbol: item.symbol,
           name: item.name,
+          sign: item.sign,
         };
       });
       dispatch(setFiatKeys({ menu }));

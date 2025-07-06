@@ -8,6 +8,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
       },
+      {
+        protocol: "https",
+        hostname: "s2.coinmarketcap.com",
+      },
     ],
   },
   env: {},

@@ -28,18 +28,17 @@ const useStyles = (): TheAnyTheme => {
         },
         // section 1 - chart
         "& > div:nth-of-type(1)": {
-          flex: 1.35,
+          flex: 1.3,
           border: `1px solid ${theme.palette?.grey?.[200]}`,
           backgroundColor: theme.palette?.background?.default,
           padding: "1rem",
         },
         // section 1 - trending
         "& > div:nth-of-type(2)": {
-          flex: 0.65,
+          flex: 0.7,
           display: "none",
           border: `1px solid ${theme.palette?.grey?.[200]}`,
           backgroundColor: theme.palette?.background?.default,
-          padding: "1rem",
           [LAPTOP]: {
             ...theme?.cxFlexBox?.col,
           },

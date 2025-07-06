@@ -100,7 +100,8 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
             backgroundColor: theme.palette?.grey?.[100],
           },
           "&.selected": {
-            backgroundColor: theme.palette?.grey?.[200],
+            backgroundColor: theme.palette?.grey?.[300],
+            borderRadius: "0.125rem",
             fontWeight: 600,
           },
         },

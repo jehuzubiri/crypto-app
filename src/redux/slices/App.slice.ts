@@ -10,7 +10,7 @@ import {
 
 const initialListState: TypesTableData = {
   list: [],
-  logos: null,
+  logos: {},
   loading: false,
   logoIsLoading: false,
   sortBy: "amount",
@@ -21,8 +21,8 @@ const initialListState: TypesTableData = {
 };
 
 const initialState: TypesAppSliceState = {
+  portfolio: {},
   searchQuery: "",
-  portfolio: initialListState,
   cryptos: initialListState,
   trending: initialListState,
   fiatKeys: {
@@ -41,19 +41,15 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    setProtfolio: (state, action: PayloadAction<Partial<{}>>) => {
+      state.portfolio = action.payload;
+    },
     setFiatKeys: (state, action: PayloadAction<Partial<TypesFiatKeys>>) => {
       state.fiatKeys = handleReducersPayload(
         "fiatKeys",
         state,
         action
       ) as TypesFiatKeys;
-    },
-    setProtfolio: (state, action: PayloadAction<Partial<TypesTableData>>) => {
-      state.portfolio = handleReducersPayload(
-        "portfolio",
-        state,
-        action
-      ) as TypesTableData;
     },
     setCryptos: (state, action: PayloadAction<Partial<TypesTableData>>) => {
       state.cryptos = handleReducersPayload(

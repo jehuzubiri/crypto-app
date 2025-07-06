@@ -29,20 +29,23 @@ const FiatSelect: React.FC<{
         <Box sx={style.headerFiatMenu}>
           <Typography>Select Fiat Value</Typography>
           <Box>
-            {fiatOptions?.map((option, index) => (
-              <Typography
-                key={`key${index}`}
-                className={fiatSelected === option?.symbol ? "selected" : ""}
-                onClick={() => {
-                  if (option?.symbol) {
-                    dispatch(setFiatKeys({ selected: option.symbol }));
+            {fiatOptions?.map((option, index) => {
+              const isSelected = option?.symbol === fiatSelected;
+              return (
+                <Typography
+                  key={`key${index}`}
+                  className={isSelected ? "selected" : ""}
+                  onClick={() => {
+                    if (option?.symbol && !isSelected) {
+                      dispatch(setFiatKeys({ selected: option.symbol }));
+                    }
                     setFiatMenuOpen(false);
-                  }
-                }}
-              >
-                {option?.label || "N/A"}
-              </Typography>
-            ))}
+                  }}
+                >
+                  {option?.label || "N/A"}
+                </Typography>
+              );
+            })}
           </Box>
         </Box>
       }

@@ -5,23 +5,30 @@ import {
   Paper,
   ClickAwayListener,
   PopperPlacementType,
+  useTheme,
 } from "@mui/material";
+import { MergedThemeOptions } from "@/models/Theme.model";
 
-const useStyles = () => ({
-  root: {
-    zIndex: 999,
-    maxWidth: "30rem",
-    position: "absolute",
-  },
-  content: {
-    borderRadius: "0.5rem",
-    overflow: "hidden",
-    padding: "1rem",
-  },
-  button: {
-    cursor: "pointer",
-  },
-});
+const useStyles = () => {
+  const theme: MergedThemeOptions = useTheme();
+
+  return {
+    root: {
+      zIndex: 999,
+      maxWidth: "30rem",
+      position: "absolute",
+    },
+    content: {
+      backgroundColor: theme.palette?.background?.default,
+      borderRadius: "0.5rem",
+      overflow: "hidden",
+      padding: "1rem",
+    },
+    button: {
+      cursor: "pointer",
+    },
+  };
+};
 
 interface DropdownProps {
   children: ReactNode;
