@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@/redux/store";

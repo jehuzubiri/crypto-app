@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useRef, memo } from "react";
 
 import { ThemeSwitch } from "@/components/General";

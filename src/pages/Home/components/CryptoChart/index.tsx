@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { ApexCharts } from "@/components/General";
 import { RootState } from "@/redux/store";

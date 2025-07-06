@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { FaChevronDown } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
