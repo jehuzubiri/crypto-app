@@ -27,12 +27,12 @@ const FiatSelect: React.FC<{
       setOpen={setFiatMenuOpen}
       content={
         <Box sx={style.headerFiatMenu}>
-          <Typography>Select Fiat Value</Typography>
+          <p>Select Fiat Value</p>
           <Box>
             {fiatOptions?.map((option, index) => {
               const isSelected = option?.symbol === fiatSelected;
               return (
-                <Typography
+                <p
                   key={`key${index}`}
                   className={isSelected ? "selected" : ""}
                   onClick={() => {
@@ -43,7 +43,7 @@ const FiatSelect: React.FC<{
                   }}
                 >
                   {option?.label || "N/A"}
-                </Typography>
+                </p>
               );
             })}
           </Box>
@@ -51,7 +51,7 @@ const FiatSelect: React.FC<{
       }
     >
       <Box>
-        <Typography>{fiatSelected}</Typography>
+        <p>{fiatSelected}</p>
         <FaChevronDown />
       </Box>
     </Dropdown>

@@ -21,7 +21,7 @@ const TrendingCryotos: React.FC = () => {
 
   return (
     <Box sx={styles.root}>
-      <Typography>Trending Cryptos</Typography>
+      <p>Trending Cryptos</p>
       <Box className={isLoading ? "loading" : "list"}>
         {isLoading
           ? loadingItems.map((_, index) => (
@@ -73,15 +73,13 @@ const TrendingCryotos: React.FC = () => {
                       height={32}
                     />
                     <Box>
-                      <Typography>{data?.name}</Typography>
-                      <Typography>{valueA}</Typography>
+                      <p>{data?.name}</p>
+                      <p>{valueA}</p>
                     </Box>
                   </Box>
                   <Box>
-                    <Typography>{valueB}</Typography>
-                    <Typography className={isNegative ? "error" : ""}>
-                      {valueC}
-                    </Typography>
+                    <p>{valueB}</p>
+                    <p className={isNegative ? "error" : ""}>{valueC}</p>
                   </Box>
                 </Box>
               );

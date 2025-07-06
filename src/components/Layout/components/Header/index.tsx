@@ -35,8 +35,8 @@ const LayoutHeader: React.FC = () => {
           alt="Lorem Ipsum Logo"
         />
         <Box>
-          <Typography>Crypto Tracker</Typography>
-          <Typography>NextJS/TypeScript CoinMarketCap</Typography>
+          <p>Crypto Tracker</p>
+          <p>NextJS/TypeScript CoinMarketCap</p>
         </Box>
       </Box>
       <Box>

@@ -19,7 +19,7 @@ const CryptoChart: React.FC = () => {
 
   return (
     <Box sx={styles.root}>
-      <Typography>Market Cap</Typography>
+      <p>Market Cap</p>
       <Box ref={containerRef} className="chart">
         <ApexCharts
           className="apexchart"
