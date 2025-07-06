@@ -22,8 +22,8 @@ A simple cryptocurrency tracker built with **Next.js**, **Redux**, and **Axios**
 ## Getting Started
 
 ```bash
-git clone https://github.com/jehuzubiri/crypto-app.git
-cd crypto-app
+git clone https://github.com/jehuzubiri/crypto-portfolio-tracker.git
+cd crypto-portfolio-tracker
 
 npm i
 npm i -g env-cmd
