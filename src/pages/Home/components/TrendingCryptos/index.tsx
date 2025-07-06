@@ -67,7 +67,7 @@ const TrendingCryotos: React.FC = () => {
                 <Box key={`key${index}`} className="list-item">
                   <Box>
                     <Image
-                      src={logo.src || AppAssetImages.logo}
+                      src={logo.jehu || AppAssetImages.coin}
                       alt={logo.alt || "CoinMarketCap Crypto Logo"}
                       width={32}
                       height={32}

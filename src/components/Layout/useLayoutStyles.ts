@@ -27,7 +27,7 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
     header: {
       ...theme?.cxFlexBox?.rowCenterBetween,
       borderBottom: `1px solid ${theme.palette?.grey?.[300]}`,
-      backgroundColor: theme.palette?.background,
+      backgroundColor: theme.palette?.background?.default,
       position,
       padding: "0.75rem 1rem",
       width: "100%",

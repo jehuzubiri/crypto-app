@@ -32,7 +32,7 @@ const useHomeHooks = (
           const listData = Object.values(resLogos?.data || {}) || [];
           listData.forEach((item) => {
             logos[item?.id] = {
-              src: item?.logo || AppAssetImages.logo,
+              src: item?.logo || AppAssetImages.coin,
               alt: `CoinMarketCap Crypto Logo (${item?.symbol})`,
               id: item?.id,
             };
@@ -64,7 +64,7 @@ const useHomeHooks = (
           const listData = Object.values(resLogos?.data || {}) || [];
           listData.forEach((item) => {
             logos[item?.id] = {
-              src: item?.logo || AppAssetImages.logo,
+              src: item?.logo || AppAssetImages.coin,
               alt: `CoinMarketCap Crypto Logo (${item?.symbol})`,
               id: item?.id,
             };

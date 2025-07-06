@@ -10,7 +10,7 @@ const useStyles = (): TheAnyTheme => {
     root: {
       "& > p": {
         ...theme.cxTypography.paragraph,
-        fontWeight: 700,
+        fontWeight: 600,
         color: isLightMode ? theme.palette?.grey?.[100] : theme.palette?.text,
         backgroundColor: theme.palette?.grey?.[isLightMode ? 500 : 400],
         padding: "0.75rem 1rem 0.5rem 1rem",

@@ -8,8 +8,8 @@ const LayoutFooter: React.FC = () => {
   return (
     <Box component="footer" sx={style.footer}>
       <Typography>
-        Simple cryptocurrency tracker built with Next.js, Redux, and Axios,
-        using data from the CoinMarketCap API. [ Jehu Zubiri / July 2025 ]
+        Simple cryptocurrency tracker by Jehu Zubiri / Built with Next.js,
+        Redux, and Axios, using data from the CoinMarketCap API. [ July 2025 ]
       </Typography>
     </Box>
   );

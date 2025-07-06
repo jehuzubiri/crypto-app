@@ -31,7 +31,6 @@ const useStyles = (): TheAnyTheme => {
           flex: 1.3,
           border: `1px solid ${theme.palette?.grey?.[200]}`,
           backgroundColor: theme.palette?.background?.default,
-          padding: "1rem",
         },
         // section 1 - trending
         "& > div:nth-of-type(2)": {
@@ -44,13 +43,14 @@ const useStyles = (): TheAnyTheme => {
           },
         },
       },
-      // section 2
+      // section 2 - main lists
       "& > div:nth-of-type(2)": {
         border: `1px solid ${theme.palette?.grey?.[200]}`,
         backgroundColor: theme.palette?.background?.default,
         padding: "1rem",
         borderRadius: "0.75rem",
         overflow: "hidden",
+        // minHeight: "50rem",
       },
     },
   };
