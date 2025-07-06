@@ -16,9 +16,9 @@ const FiatSelect: React.FC<{
   const { fiatKeys } = useSelector((state: RootState) => state.app);
 
   const style = useStyles({});
+  const fiatSelected = fiatKeys?.selected || "USD";
   const fiatOptions =
     useMemo(() => Object.values(fiatKeys?.menu || {}), [fiatKeys?.menu]) || [];
-  const fiatSelected = fiatKeys?.selected || "USD";
 
   return (
     <Dropdown
