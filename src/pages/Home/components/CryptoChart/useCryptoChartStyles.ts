@@ -25,6 +25,7 @@ const useStyles = (): TheAnyTheme => {
         height: "20rem",
         [LAPTOP]: {
           height: "100%",
+          maxHeight: "18rem",
         },
       },
     },
