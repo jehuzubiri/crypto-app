@@ -21,7 +21,7 @@ const TrendingCryotos: React.FC = () => {
 
   return (
     <Box sx={styles.root}>
-      <p>Trending Now (1hr)</p>
+      <p>Trending Stocks (1h ago)</p>
       <Box className={isLoading ? "loading" : "list"}>
         {isLoading
           ? loadingItems.map((_, index) => (
@@ -45,6 +45,8 @@ const TrendingCryotos: React.FC = () => {
               const quoteChange = data?.quote.USD.percent_change_1h;
               const isNegative = quoteChange <= 0;
               const quoteChangePrefix = isNegative ? "" : "+";
+              const quoteChangeRatio =
+                (data?.quote?.USD?.price || 0) * (quoteChange / 100);
 
               const cryptoTotalSupply = fiatAmountDisplayFormatter(
                 data?.total_supply || 0
@@ -60,7 +62,8 @@ const TrendingCryotos: React.FC = () => {
               }${quotePrice} (${selected})`;
 
               const valueC = `${quoteChangePrefix}${fiatAmountDisplayFormatter(
-                (data?.quote?.USD?.price || 0) * (quoteChange / 100)
+                quoteChangeRatio,
+                quoteChangeRatio < 0.01 && quoteChangeRatio > 0 ? 4 : 2
               )} (${fiatAmountDisplayFormatter(quoteChange)}%)`;
 
               return (

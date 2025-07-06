@@ -69,14 +69,12 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
     },
   });
 
-  const transformCryptoData = (rawData: TheAnyConst) => {
-    return rawData.map((item: TheAnyConst) => {
+  const transformCryptoData = (cryptocurrencies: TheAnyConst) => {
+    return cryptocurrencies.map((item: TheAnyConst) => {
       const quote = item.quote?.USD || {};
       const data = labels.map((label) => {
         const key = `percent_change_${label.toLowerCase()}`;
-        return typeof quote[key] === "number"
-          ? Number(quote[key].toFixed(2))
-          : 0;
+        return typeof quote[key] === "number" ? Number(quote[key]) : 0;
       });
 
       return {
