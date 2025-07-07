@@ -1,4 +1,13 @@
+import _ from "lodash";
 import { CryproParsedListItem, TheAnyConst } from "@/models/General.model";
+
+type WithId = { id: number | string; [key: string]: any };
+
+export const mergeByIdUnique = <T extends WithId>(
+  array1: T[],
+  array2: T[],
+  key: string
+): T[] => _.unionBy(array1, array2, key);
 
 export const getCryptoTableDataFromRaw = (
   cryptocurrencies: CryproParsedListItem[] | TheAnyConst = [],

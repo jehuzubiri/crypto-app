@@ -5,12 +5,16 @@ import { List, ListMobile } from "./components";
 import useMainCryptosHook from "./useMainCryptosHook";
 import useStyles from "./useMainCryptosStyles";
 
-const MainCryptos: React.FC = () => {
+const MainCryptos: React.FC<{
+  loadMoreCryptos: () => void;
+}> = ({ loadMoreCryptos }) => {
   const styles = useStyles();
   const {
+    displayLoadMore,
     loading,
     settings,
     cryptoList,
+    cryptoIsLoading,
     handleTabChange,
     handleSearchChange,
     handleColumnHeaderClick,
@@ -20,19 +24,22 @@ const MainCryptos: React.FC = () => {
   return (
     <Box sx={styles.root}>
       <p>CRYPTOS</p>
+
       <Box sx={styles.actionBar}>
         <Tabs onChange={handleTabChange} value={settings.activeTab}>
-          <Tab label="All" value="all" />
-          <Tab label="Portfolio" value="portfolio" />
+          <Tab disabled={cryptoIsLoading} label="All" value="all" />
+          <Tab disabled={cryptoIsLoading} label="Portfolio" value="portfolio" />
         </Tabs>
         <TextField
           id="search-field"
           size="small"
           label="Search"
+          disabled={cryptoIsLoading}
           value={settings.searchKey}
           onChange={handleSearchChange}
         />
       </Box>
+
       {styles.isUpTabletScreen ? (
         <List
           loading={loading}
@@ -50,8 +57,11 @@ const MainCryptos: React.FC = () => {
           cryptoList={cryptoList}
         />
       )}
-
-      <Box>{/* <p>Load More</p> */}</Box>
+      {displayLoadMore ? (
+        <Box className="load-more">
+          <p onClick={loadMoreCryptos}>Load More</p>
+        </Box>
+      ) : null}
     </Box>
   );
 };

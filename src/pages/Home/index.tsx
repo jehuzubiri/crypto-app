@@ -14,7 +14,7 @@ const HomePage: React.FC<{
 }> = ({ cryptoList, cryptoTrending }) => {
   const style = useStyles();
 
-  const {} = useHomeHooks(cryptoList, cryptoTrending);
+  const { loadMoreCryptos } = useHomeHooks(cryptoList, cryptoTrending);
 
   return (
     <Box component="section" sx={style.root}>
@@ -22,7 +22,7 @@ const HomePage: React.FC<{
         <CryptoChart />
         <TrendingCryptos />
       </Box>
-      <MainCryptos />
+      <MainCryptos loadMoreCryptos={loadMoreCryptos} />
     </Box>
   );
 };

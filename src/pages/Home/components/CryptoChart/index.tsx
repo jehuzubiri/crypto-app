@@ -11,8 +11,8 @@ import useCryptoChartHook from "./useCryptoChartHook";
 
 const CryptoChart: React.FC = () => {
   const styles = useStyles();
-  const { cryptos, portfolio } = useSelector((state: RootState) => state.app);
-  const data = { cryptos, portfolio };
+  const { portfolio, trending } = useSelector((state: RootState) => state.app);
+  const data = { trending, portfolio };
 
   const { containerRef, containerSize } = useContainerSizeHook(-24, -20);
   const { options, series } = useCryptoChartHook(containerSize, data);

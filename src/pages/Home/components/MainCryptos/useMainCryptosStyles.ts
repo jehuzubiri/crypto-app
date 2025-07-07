@@ -19,6 +19,24 @@ const useStyles = (): TheAnyTheme => {
         backgroundColor: theme.palette?.grey?.[isLightMode ? 300 : 600],
         padding: "0.75rem 1rem 0.5rem 1rem",
       },
+      "& > .load-more": {
+        ...theme?.cxFlexBox?.colCenter,
+        padding: "1rem 1rem 2rem 1rem",
+        "& > p": {
+          ...theme.cxTypography.paragraph,
+          color: isLightMode ? theme.palette?.grey?.[800] : theme.palette?.text,
+          border: `1px solid ${theme.palette?.grey?.[isLightMode ? 300 : 600]}`,
+          cursor: "pointer",
+          textAlign: "center",
+          padding: "0.75rem",
+          minWidth: "10rem",
+          borderRadius: "0.25rem",
+          transition: "all 0.3s",
+          "&:active": {
+            backgroundColor: theme.palette?.grey?.[isLightMode ? 300 : 600],
+          },
+        },
+      },
     },
     actionBar: {
       ...theme?.cxFlexBox?.col,

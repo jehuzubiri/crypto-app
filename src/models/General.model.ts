@@ -12,6 +12,15 @@ export interface ServicesApiResponse {
   config?: TheAnyConst;
 }
 
+export interface ServicesGetParams {
+  start: number;
+  limit?: number;
+  convert?: "USD" | string;
+  sort?: "market_cap" | "price" | "volume_24h";
+  sort_dir?: "desc" | "asc";
+  cryptocurrency_type?: "all" | "coins" | "token";
+}
+
 export interface CryproParsedListItem {
   id: number | string;
   slug: string;

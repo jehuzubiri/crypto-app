@@ -9,11 +9,8 @@ export interface TypesTableData {
   list: TheAnyConst[];
   logos: Object;
   loading: boolean;
-  sortBy: "amount" | "market_cap";
-  pagination: {
-    page: number;
-    total: number;
-  };
+  sort: "price" | "volume_24h" | "market_cap";
+  page: number;
 }
 
 export interface TypesFiatKeys {

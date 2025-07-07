@@ -51,11 +51,10 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
             color: theme.palette?.text,
           },
           "& > p:nth-of-type(2)": {
-            ...theme.cxTypography.paragraph,
+            ...theme.cxTypography.tag,
             color: isLightMode
-              ? theme.palette?.grey?.[400]
+              ? theme.palette?.grey?.[500]
               : theme.palette?.text,
-            fontWeight: 700,
           },
         },
       },

@@ -12,11 +12,8 @@ const initialListState: TypesTableData = {
   list: [],
   logos: {},
   loading: false,
-  sortBy: "amount",
-  pagination: {
-    page: 1,
-    total: 0,
-  },
+  sort: "market_cap",
+  page: 1,
 };
 
 const initialState: TypesAppSliceState = {

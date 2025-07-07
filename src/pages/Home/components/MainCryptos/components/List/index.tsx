@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { FaChevronDown } from "react-icons/fa";
 import { RiAddLargeFill } from "react-icons/ri";
 import { MdOpenInNew } from "react-icons/md";
@@ -37,7 +37,7 @@ const List: React.FC<{
 }) => {
   const styles = useStyles();
   const { cryptos, fiatKeys } = useSelector((state: RootState) => state.app);
-  const { logos } = cryptos;
+  const { logos, loading: cryptosIsLoading } = cryptos;
   const { selected } = fiatKeys;
 
   return (
@@ -45,7 +45,7 @@ const List: React.FC<{
       {/* TABLE HEAD */}
       <Box className="t-head">
         {MainCryptoTableColumns.map((column: TheAnyConst) => {
-          const notSortable = column?.not_sortable || false;
+          const notSortable = column?.not_sortable || cryptosIsLoading || false;
           const { isActive, isDesc } = columnHeaderIsSelected(column.key);
 
           const handleClick = () =>
@@ -54,9 +54,9 @@ const List: React.FC<{
           return (
             <Box
               key={column.key}
-              className={`t-cell ${column.key} ${isActive ? "active" : ""} ${
-                notSortable ? "" : "sortable"
-              }`}
+              className={`t-cell ${column.key} ${
+                isActive && !cryptosIsLoading ? "active" : ""
+              } ${notSortable ? "" : "sortable"}`}
             >
               {notSortable ? null : (
                 <FaChevronDown
@@ -64,6 +64,7 @@ const List: React.FC<{
                   className={isDesc && isActive ? "desc" : ""}
                 />
               )}
+              {cryptosIsLoading ? <CircularProgress size="16px" /> : null}
               <p onClick={handleClick}>{column.label}</p>
             </Box>
           );
@@ -71,9 +72,7 @@ const List: React.FC<{
       </Box>
 
       {/* TABLE ROWS */}
-      {loading && searchActive ? (
-        <LoaderWeb />
-      ) : cryptoList?.length ? (
+      {cryptoList?.length ? (
         cryptoList?.map((crypto: CryproParsedListItem) => {
           const cryptoSymbol = crypto?.symbol || "";
           const quoteChange = crypto?.percent_24h || 0;
@@ -126,9 +125,12 @@ const List: React.FC<{
             </Box>
           );
         })
-      ) : (
+      ) : (loading && searchActive) || cryptosIsLoading ? null : (
         <Empty searchActive={searchActive} activeTab={activeTab} />
       )}
+
+      {/* TABLE LOADING */}
+      {(loading && searchActive) || cryptosIsLoading ? <LoaderWeb /> : null}
     </Box>
   );
 };

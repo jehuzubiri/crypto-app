@@ -1,29 +1,15 @@
 import { AppDefaultFiatValue } from "@/constant/App.const";
+import { ServicesGetParams } from "@/models/General.model";
 import API_MAIN from "@/services";
 
 //CSR ===== start =====
-export const getAllCurrencies = async (
-  params: Object | null = {},
+export const getCryptos = async (
+  params: ServicesGetParams,
   signal?: AbortSignal
 ) => {
-  //@DESC: params for trending
-  // {
-  //   sort: 'percent_change_24h',
-  //   sort_dir: 'desc',
-  //   limit: 10,
-  //   convert: 'USD'
-  // }
-
   return await API_MAIN.postProxy(
     "cryptocurrency/listings/latest",
-    {
-      start: 1,
-      limit: 50,
-      convert: "USD",
-      sort: "market_cap",
-      sort_dir: "desc",
-      cryptocurrency_type: "coins",
-    },
+    params,
     signal
   );
 };
@@ -36,6 +22,22 @@ export const getCryptoLogos = async (
   return await API_MAIN.postProxy(
     "cryptocurrency/info",
     { id: ids.join(",") },
+    signal
+  );
+};
+
+export const getTrendingCryptos = async (
+  fiatCurrency: "USD" | string,
+  signal?: AbortSignal
+) => {
+  return await API_MAIN.postProxy(
+    "cryptocurrency/listings/latest",
+    {
+      convert: fiatCurrency || AppDefaultFiatValue,
+      sort: "percent_change_24h",
+      sort_dir: "desc",
+      limit: 5,
+    },
     signal
   );
 };
@@ -57,10 +59,10 @@ export const getTrendingCryptosSSR = async () => {
 export const getLatestCryptosSSR = async () => {
   return await API_MAIN.postProxySSR("cryptocurrency/listings/latest", {
     start: 1, // initial page
-    limit: 50, // 50 items per page
+    limit: 20, // 20 items per page
     convert: AppDefaultFiatValue, // currency: default is USD
     sort: "market_cap", // 'price' | 'volume_24h'
     sort_dir: "desc", // descending
-    cryptocurrency_type: "coins", // 'all' | 'coins' | 'tokens'
+    cryptocurrency_type: "all", // 'all' | 'coins' | 'tokens'
   });
 };

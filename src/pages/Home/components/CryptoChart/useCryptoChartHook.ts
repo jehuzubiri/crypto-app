@@ -13,7 +13,7 @@ interface Size {
 const labels = ["1h", "24h", "7d", "30d", "60d", "90d"];
 
 const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
-  const { cryptos, portfolio } = data;
+  const { trending, portfolio } = data;
 
   const { mode } = useThemeContext();
   const isLightMode = mode === "light";
@@ -132,7 +132,7 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
   }, [chartSize, isLightMode, series.length]);
 
   const updateSeriesValue = useCallback(() => {
-    const cryptoList = cryptos?.list || [];
+    const cryptoList = trending?.list || [];
     let newSeriesData: TheAnyConst = [];
 
     if (!cryptoList?.length) return;
@@ -140,11 +140,11 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
     if (portfolio?.length) {
       newSeriesData = transformCryptoData(portfolio);
     } else {
-      newSeriesData = transformCryptoData(cryptoList.slice(0, 5));
+      newSeriesData = transformCryptoData(cryptoList);
     }
 
     setSeries(newSeriesData);
-  }, [cryptos?.list, portfolio]);
+  }, [trending?.list, portfolio]);
 
   useEffect(() => {
     updateOptionValues();
@@ -152,7 +152,7 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
 
   useEffect(() => {
     updateSeriesValue();
-  }, [cryptos?.list, portfolio]);
+  }, [trending?.list, portfolio]);
 
   return {
     options,
