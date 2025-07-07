@@ -194,21 +194,6 @@ const useStyles = (): TheAnyTheme => {
           maxWidth: "8rem",
         },
       },
-      // TABLE - Empty
-      "& > .t-row-empty": {
-        ...theme?.cxFlexBox?.colCenterCenter,
-        height: "19.125rem",
-        gap: "1rem",
-        "& > p": {
-          ...theme.cxTypography.paragraph,
-          color: theme.palette?.text,
-        },
-        "& > svg": {
-          color: theme.palette?.grey?.[isLightMode ? 400 : 400],
-          height: "5rem",
-          width: "5rem",
-        },
-      },
     },
     listMobile: {
       ...theme?.cxFlexBox?.col,

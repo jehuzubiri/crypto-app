@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Skeleton } from "@mui/material";
 
-const Loading: React.FC = () => {
+const LoaderWeb: React.FC = () => {
   const loadingItems = Array.from({ length: 5 }, (_, i) => i + 1);
 
   return loadingItems.map((_, index) => {
@@ -30,4 +30,4 @@ const Loading: React.FC = () => {
   });
 };
 
-export default React.memo(Loading);
+export default React.memo(LoaderWeb);

@@ -7,37 +7,13 @@ import { RiAddLargeFill } from "react-icons/ri";
 import { MdOpenInNew } from "react-icons/md";
 
 import { RootState } from "@/redux/store";
-import { AppAssetImages } from "@/constant/App.const";
+import { AppAssetImages, MainCryptoTableColumns } from "@/constant/App.const";
 import { CryproParsedListItem, TheAnyConst } from "@/models/General.model";
 import { fiatAmountDisplayFormatter } from "@/utils/General.helpers";
-import useStyles from "../../useMainCryptosStyles";
-import Loading from "./components/Loading";
-import Empty from "./components/Empty";
 
-const columns = [
-  {
-    key: "name",
-    label: "NAME",
-  },
-  {
-    key: "price",
-    label: "PRICE",
-  },
-  {
-    key: "change",
-    label: "24H",
-  },
-  {
-    key: "supply",
-    label: "TOTAL SUPPLY",
-    not_sortable: true,
-  },
-  {
-    key: "action",
-    label: "ACTION",
-    not_sortable: true,
-  },
-];
+import Empty from "../../../Custom/Empty";
+import LoaderWeb from "../../../Custom/LoaderWeb";
+import useStyles from "../../useMainCryptosStyles";
 
 type TableColumnTypes = "name" | "price" | "change" | "supply";
 
@@ -68,7 +44,7 @@ const List: React.FC<{
     <Box sx={styles.list}>
       {/* TABLE HEAD */}
       <Box className="t-head">
-        {columns.map((column: TheAnyConst) => {
+        {MainCryptoTableColumns.map((column: TheAnyConst) => {
           const notSortable = column?.not_sortable || false;
           const { isActive, isDesc } = columnHeaderIsSelected(column.key);
 
@@ -96,7 +72,7 @@ const List: React.FC<{
 
       {/* TABLE ROWS */}
       {loading && searchActive ? (
-        <Loading />
+        <LoaderWeb />
       ) : cryptoList?.length ? (
         cryptoList?.map((crypto: CryproParsedListItem) => {
           const cryptoSymbol = crypto?.symbol || "";

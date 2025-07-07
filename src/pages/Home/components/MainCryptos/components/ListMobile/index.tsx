@@ -8,6 +8,7 @@ import { AppAssetImages } from "@/constant/App.const";
 import { CryproParsedListItem } from "@/models/General.model";
 import { fiatAmountDisplayFormatter } from "@/utils/General.helpers";
 
+import Empty from "../../../Custom/Empty";
 import LoaderMobile from "../../../Custom/LoaderMobile";
 import useStyles from "../../useMainCryptosStyles";
 
@@ -16,7 +17,12 @@ const ListMobile: React.FC<{
   loading: boolean;
   searchActive: boolean;
   cryptoList: CryproParsedListItem[];
-}> = ({ cryptoList = [], searchActive = false }) => {
+}> = ({
+  cryptoList = [],
+  searchActive = false,
+  loading = false,
+  activeTab,
+}) => {
   const styles = useStyles();
 
   const { cryptos, fiatKeys } = useSelector((state: RootState) => state.app);
@@ -25,7 +31,9 @@ const ListMobile: React.FC<{
 
   return (
     <Box sx={styles.listMobile}>
-      {cryptoList?.length ? (
+      {loading ? (
+        <LoaderMobile items={10} />
+      ) : cryptoList?.length ? (
         cryptoList.map((crypto: CryproParsedListItem) => {
           const cryptoSymbol = crypto?.symbol || "";
           const quoteChange = crypto?.percent_24h || 0;
@@ -72,10 +80,8 @@ const ListMobile: React.FC<{
             </Box>
           );
         })
-      ) : searchActive ? (
-        <p>Empty Here</p>
       ) : (
-        <LoaderMobile items={10} />
+        <Empty searchActive={searchActive} activeTab={activeTab} />
       )}
     </Box>
   );

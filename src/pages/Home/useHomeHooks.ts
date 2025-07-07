@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 // import { getCryptoLogos } from "@/services/apis";
 import { AppAssetImages } from "@/constant/App.const";
-import { ServicesApiResponse, TheAnyConst } from "@/models/General.model";
+import { ServicesApiResponse } from "@/models/General.model";
 import { getCryptoTableDataFromRaw } from "@/utils/General.helpers";
 import { setCryptos, setTrendingCryptos } from "@/redux/slices/App.slice";
 import { RootState } from "@/redux/store";

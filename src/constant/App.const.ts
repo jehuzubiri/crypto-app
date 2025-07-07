@@ -53,3 +53,28 @@ export const AppRandomColors = [
   "#1E6F5C",
   "#B83B5E",
 ];
+
+export const MainCryptoTableColumns = [
+  {
+    key: "name",
+    label: "NAME",
+  },
+  {
+    key: "price",
+    label: "PRICE",
+  },
+  {
+    key: "change",
+    label: "24H",
+  },
+  {
+    key: "supply",
+    label: "TOTAL SUPPLY",
+    not_sortable: true,
+  },
+  {
+    key: "action",
+    label: "ACTION",
+    not_sortable: true,
+  },
+];
