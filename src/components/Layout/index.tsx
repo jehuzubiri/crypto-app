@@ -19,8 +19,14 @@ const MainLayout: FC<{ children: ReactNode; fiatKeys: TheAnyConst }> = ({
 
   useEffect(() => {
     if (fiatKeys?.ok && fiatKeys?.data?.length) {
-      const menu = {};
-      fiatKeys.data.forEach((item: TheAnyConst) => {
+      const sortedData = [...fiatKeys.data].sort((a, b) => {
+        if (a.symbol === "USD") return -1;
+        if (b.symbol === "USD") return 1;
+        return a.name.localeCompare(b.name);
+      });
+
+      const menu: Record<string, TheAnyConst> = {};
+      sortedData.forEach((item: TheAnyConst) => {
         menu[item.symbol] = {
           label: `${item.name} (${item.symbol})`,
           symbol: item.symbol,
@@ -28,6 +34,7 @@ const MainLayout: FC<{ children: ReactNode; fiatKeys: TheAnyConst }> = ({
           sign: item.sign,
         };
       });
+
       dispatch(setFiatKeys({ menu }));
     }
   }, [fiatKeys]);

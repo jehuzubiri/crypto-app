@@ -3,8 +3,8 @@ import { AppConfig } from "@/constant/App.const";
 import Providers from "@/components/Provider";
 import MainLayout from "@/components/Layout";
 
-// import { getFiatCurrenciesSSR } from "@/services/apis";
-import { dummyApiFiat } from "@/constant/Dummy.const";
+import { getFiatCurrenciesSSR } from "@/services/apis";
+// import { dummyApiFiat } from "@/constant/Dummy.const";
 
 // @DESC: init app font
 import localFont from "next/font/local";
@@ -39,13 +39,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const fiatKeys = await getFiatCurrenciesSSR();
+  const fiatKeys = await getFiatCurrenciesSSR();
 
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
-          <MainLayout fiatKeys={dummyApiFiat}>{children}</MainLayout>
+          <MainLayout fiatKeys={fiatKeys}>{children}</MainLayout>
         </Providers>
       </body>
     </html>

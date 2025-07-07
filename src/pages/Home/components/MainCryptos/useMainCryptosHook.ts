@@ -109,7 +109,11 @@ const useMainCryptosHook = () => {
       });
 
       try {
-        if (["price", "change"].includes(active) && !signal?.aborted) {
+        if (
+          ["price", "change"].includes(active) &&
+          !signal?.aborted &&
+          settings.activeTab === "all"
+        ) {
           dispatch(setCryptos({ loading: true }));
           sortedParams.sort = active === "price" ? "price" : "volume_24h";
           const res = await getCryptos(sortedParams, signal);
@@ -135,7 +139,7 @@ const useMainCryptosHook = () => {
         controller.abort();
       };
     },
-    [sortSettings, selected, cryptos?.loading]
+    [sortSettings, settings.activeTab, selected, cryptos?.loading]
   );
 
   const columnHeaderIsSelected = (key: TableColumnTypes) => {
