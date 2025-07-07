@@ -56,7 +56,7 @@ const ListMobile: React.FC<{
                   <p>{crypto?.name}</p>
                   <p>
                     {`${fiatAmountDisplayFormatter(
-                      crypto?.totalSupply
+                      crypto?.total_supply
                     )} ${cryptoSymbol}`}
                   </p>
                 </Box>

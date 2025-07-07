@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useThemeContext } from "@/theme/ThemeContext";
 
 import { AppRandomColors } from "@/constant/App.const";
-import { TheAnyConst } from "@/models/General.model";
+import { CryproParsedListItem, TheAnyConst } from "@/models/General.model";
 import { fiatAmountDisplayFormatter } from "@/utils/General.helpers";
 
 interface Size {
@@ -70,8 +70,8 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
     },
   });
 
-  const transformCryptoData = (cryptocurrencies: TheAnyConst) => {
-    return cryptocurrencies.map((item: TheAnyConst) => {
+  const transformCryptoData = (cryptocurrencies: CryproParsedListItem[]) => {
+    return cryptocurrencies.map((item: CryproParsedListItem) => {
       const quote = item.quote?.USD || {};
       const data = labels.map((label) => {
         const key = `percent_change_${label.toLowerCase()}`;
@@ -132,14 +132,13 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
   }, [chartSize, isLightMode, series.length]);
 
   const updateSeriesValue = useCallback(() => {
-    const portfolioList = Object.values(portfolio || {}) || [];
     const cryptoList = cryptos?.list || [];
-    let newSeriesData = [];
+    let newSeriesData: TheAnyConst = [];
 
     if (!cryptoList?.length) return;
 
-    if (portfolioList?.length) {
-      newSeriesData = transformCryptoData(portfolioList);
+    if (portfolio?.length) {
+      newSeriesData = transformCryptoData(portfolio);
     } else {
       newSeriesData = transformCryptoData(cryptoList.slice(0, 5));
     }

@@ -30,6 +30,7 @@ const columns = [
   {
     key: "supply",
     label: "TOTAL SUPPLY",
+    not_sortable: true,
   },
   {
     key: "action",
@@ -138,7 +139,7 @@ const List: React.FC<{
               <Box className="t-cell supply">
                 <p>
                   {`${fiatAmountDisplayFormatter(
-                    crypto?.totalSupply
+                    crypto?.total_supply
                   )} ${cryptoSymbol}`}
                 </p>
               </Box>

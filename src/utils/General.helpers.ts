@@ -1,37 +1,37 @@
-import { TheAnyConst } from "@/models/General.model";
+import { CryproParsedListItem, TheAnyConst } from "@/models/General.model";
 
 export const getCryptoTableDataFromRaw = (
-  cryptocurrencies: [] | TheAnyConst = [],
+  cryptocurrencies: CryproParsedListItem[] | TheAnyConst = [],
   selectedFiat: string | "USD" = "USD",
-  excludeIds: [] | null = []
+  excludeIds: string[] | number[] | null = []
 ) => {
   if (!cryptocurrencies?.length) return [];
 
-  return (
-    cryptocurrencies
+  return cryptocurrencies
+    .filter(
       // @ts-ignore
-      .filter((crypto: TheAnyConst) => !excludeIds?.includes(crypto?.id))
-      .map((crypto: TheAnyConst) => {
-        const quote = crypto.quote[selectedFiat] || {};
+      (crypto: CryproParsedListItem) => !excludeIds?.includes(crypto?.id)
+    )
+    .map((crypto: CryproParsedListItem) => {
+      const quote = crypto.quote[selectedFiat] || {};
 
-        return {
-          logo: crypto?.logo || null,
-          price: quote?.price || 0,
-          marketCap: quote?.market_cap || 0,
-          volume24h: quote?.volume_24h || 0,
-          percent_24h: quote?.percent_change_24h || 0,
-          totalSupply: crypto.total_supply || 0,
-          // original properties
-          id: crypto.id,
-          slug: crypto.slug,
-          name: crypto.name,
-          symbol: crypto.symbol,
-          quote: crypto.quote,
-          circulating_supply: crypto.circulating_supply,
-          cmc_rank: crypto.cmc_rank,
-        };
-      })
-  );
+      return {
+        logo: crypto?.logo || null,
+        price: quote?.price || 0,
+        marketCap: quote?.market_cap || 0,
+        volume24h: quote?.volume_24h || 0,
+        percent_24h: quote?.percent_change_24h || 0,
+        // original properties
+        id: crypto.id,
+        slug: crypto.slug,
+        name: crypto.name,
+        symbol: crypto.symbol,
+        quote: crypto.quote,
+        circulating_supply: crypto.circulating_supply,
+        cmc_rank: crypto.cmc_rank,
+        total_supply: crypto.total_supply || 0,
+      };
+    });
 };
 
 export const fiatAmountDisplayFormatter = (

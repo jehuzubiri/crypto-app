@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "@/redux/store";
 import { AppAssetImages } from "@/constant/App.const";
-import { TheAnyConst } from "@/models/General.model";
+import { CryproParsedListItem } from "@/models/General.model";
 
 import { fiatAmountDisplayFormatter } from "@/utils/General.helpers";
 import useStyles from "./useTrendingCryptosStyles";
@@ -26,7 +26,7 @@ const TrendingCryotos: React.FC = () => {
         {isLoading ? (
           <LoaderMobile />
         ) : (
-          list.map((crypto: TheAnyConst, index) => {
+          list.map((crypto: CryproParsedListItem, index) => {
             const fiatCurrency = fiatKeys?.menu?.[selected] || { sign: "$" };
             const cryptoSymbol = crypto?.symbol || "";
             const quoteChange = crypto?.quote[selected]?.percent_change_1h || 0;

@@ -14,12 +14,16 @@ export interface ServicesApiResponse {
 
 export interface CryproParsedListItem {
   id: number | string;
+  slug: string;
   name: string;
   symbol: string;
   price: number;
   marketCap: number;
   volume24h: number;
   percent_24h: number;
-  totalSupply: number;
+  cmc_rank: number;
+  total_supply: number;
+  circulating_supply: number;
   logo?: TheAnyConst;
+  quote?: TheAnyConst;
 }
