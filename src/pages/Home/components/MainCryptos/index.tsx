@@ -1,39 +1,59 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-
-import { RootState } from "@/redux/store";
-import { List, ListMobile } from "./components";
+import { Box, InputAdornment, Tab, Tabs, TextField } from "@mui/material";
+import { MdOpenInNew } from "react-icons/md";
 
 import { getCryptoTableDataFromRaw } from "@/utils/General.helpers";
 import { dummyApiCryptoList } from "@/constant/Dummy.const";
+import { List, ListMobile } from "./components";
+
+import useMainCryptosHook from "./useMainCryptosHook";
 import useStyles from "./useMainCryptosStyles";
 
 const MainCryptos: React.FC = () => {
   const styles = useStyles();
-  const { fiatKeys, cryptos } = useSelector((state: RootState) => state.app);
-  const { selected } = fiatKeys;
-  const { loading } = cryptos;
+  const {
+    fiatKeySelected,
+    loading,
+    settings,
+    handleTabChange,
+    handleSearchChange,
+    handleColumnHeaderClick,
+    columnHeaderIsSelected,
+  } = useMainCryptosHook();
 
   return (
     <Box sx={styles.root}>
-      <p>ALL CRYPTOS</p>
-      {/* <Box sx={styles.actionBar}>
-        <Box>Tab Menu</Box>
-        <Box>Other Settings</Box>
-      </Box> */}
+      <p>CRYPTOS</p>
+      <Box sx={styles.actionBar}>
+        <Tabs onChange={handleTabChange} value={settings.activeTab}>
+          <Tab label="All" value="all" />
+          <Tab label="Portfolio" value="portfolio" />
+        </Tabs>
+        <TextField
+          // disabled
+          value={settings.searchKey}
+          onChange={handleSearchChange}
+          id="search-field"
+          size="small"
+          label="Search cryptocurrency"
+        />
+      </Box>
       {styles.isUpTabletScreen ? (
         <List
+          handleColumnHeaderClick={handleColumnHeaderClick}
+          columnHeaderIsSelected={columnHeaderIsSelected}
+          searchActive={settings.searchKey !== ""}
           cryptoList={getCryptoTableDataFromRaw(
             dummyApiCryptoList?.data,
-            selected
+            fiatKeySelected
           )}
         />
       ) : (
         <ListMobile
+          searchActive={settings.searchKey !== ""}
           cryptoList={getCryptoTableDataFromRaw(
             dummyApiCryptoList?.data,
-            selected
+            fiatKeySelected
           )}
         />
       )}

@@ -22,10 +22,48 @@ const useStyles = (): TheAnyTheme => {
     },
     actionBar: {
       ...theme?.cxFlexBox?.col,
-      gap: "0.5rem",
-      padding: "0.75rem 1rem 0.5rem 1rem",
+      gap: "1rem",
+      padding: "1rem 1rem 0.5rem 1rem",
       [MOBILE]: {
         ...theme?.cxFlexBox?.rowCenterBetween,
+      },
+      // SELECT
+      "& > .MuiTabs-root": {
+        width: "fit-content",
+        padding: "0.125rem",
+        border: `1px solid ${theme.palette?.grey?.[isLightMode ? 300 : 600]}`,
+        minHeight: "2rem",
+        borderRadius: "0.25rem",
+        "& > div > div.MuiTabs-list": {
+          borderRadius: "0.25rem",
+          button: {
+            minHeight: "2rem",
+            minWidth: "5.625rem",
+            borderRadius: "0.25rem",
+            padding: "0.25rem 0.5rem",
+            textTransform: "unset",
+            // button text
+            ...theme.cxTypography.paragraph,
+            fontWeight: 600,
+            color: isLightMode
+              ? theme.palette?.grey?.[700]
+              : theme.palette?.text?.primary,
+            "&.Mui-selected": {
+              backgroundColor: theme.palette?.grey?.[isLightMode ? 200 : 100],
+            },
+          },
+        },
+        "& .MuiTabs-indicator": {
+          display: "none",
+        },
+      },
+      // SEARCH - INPUT
+      "& > .MuiTextField-root": {
+        minWidth: "15rem",
+        "& input, & label": {
+          ...theme.cxTypography.paragraph,
+          color: theme.palette?.text,
+        },
       },
     },
     list: {
@@ -44,6 +82,7 @@ const useStyles = (): TheAnyTheme => {
           justifyContent: "flex-end",
           gap: "0.5rem",
           width: "100%",
+          height: "100%",
           "&.name": {
             justifyContent: "flex-start",
           },
@@ -69,7 +108,7 @@ const useStyles = (): TheAnyTheme => {
               color: theme.palette?.text?.primary,
             },
           },
-          "&.sortable": {
+          "&.sortable > p, &.sortable > svg": {
             cursor: "pointer",
           },
         },

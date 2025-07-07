@@ -15,11 +15,11 @@ import useStyles from "../../useMainCryptosStyles";
 const columns = [
   {
     key: "name",
-    label: "Name",
+    label: "NAME",
   },
   {
     key: "price",
-    label: "Price",
+    label: "PRICE",
   },
   {
     key: "change",
@@ -27,18 +27,31 @@ const columns = [
   },
   {
     key: "supply",
-    label: "Total Supply",
+    label: "TOTAL SUPPLY",
   },
   {
     key: "action",
-    label: "Action",
+    label: "ACTION",
     not_sortable: true,
   },
 ];
 
+type TableColumnTypes = "name" | "price" | "change" | "supply";
+
 const List: React.FC<{
   cryptoList: CryproParsedListItem[];
-}> = ({ cryptoList = [] }) => {
+  searchActive: boolean;
+  columnHeaderIsSelected: (props: TableColumnTypes) => {
+    isActive: boolean;
+    isDesc: boolean;
+  };
+  handleColumnHeaderClick: (props: TableColumnTypes) => void;
+}> = ({
+  cryptoList = [],
+  searchActive = false,
+  columnHeaderIsSelected,
+  handleColumnHeaderClick,
+}) => {
   const styles = useStyles();
   const loadingItems = Array.from({ length: 5 }, (_, i) => i + 1);
 
@@ -50,101 +63,114 @@ const List: React.FC<{
     <Box sx={styles.list}>
       {/* TABLE HEAD */}
       <Box className="t-head">
-        {columns.map((column: TheAnyConst) => (
-          <Box
-            key={column.key}
-            className={`t-cell ${column.key} ${
-              column?.active ? "active" : ""
-            } ${column?.not_sortable ? "" : "sortable"}`}
-          >
-            {column?.not_sortable ? null : (
-              <FaChevronDown
-                className={column?.isDesc && column?.active ? "desc" : ""}
-              />
-            )}
-            <p>{column.label}</p>
-          </Box>
-        ))}
+        {columns.map((column: TheAnyConst) => {
+          const notSortable = column?.not_sortable || false;
+          const { isActive, isDesc } = columnHeaderIsSelected(column.key);
+
+          const handleClick = () =>
+            notSortable ? null : handleColumnHeaderClick(column.key);
+
+          return (
+            <Box
+              key={column.key}
+              className={`t-cell ${column.key} ${isActive ? "active" : ""} ${
+                notSortable ? "" : "sortable"
+              }`}
+            >
+              {notSortable ? null : (
+                <FaChevronDown
+                  onClick={handleClick}
+                  className={isDesc && isActive ? "desc" : ""}
+                />
+              )}
+              <p onClick={handleClick}>{column.label}</p>
+            </Box>
+          );
+        })}
       </Box>
 
       {/* TABLE ROWS */}
-      {cryptoList?.length
-        ? cryptoList?.map((crypto: CryproParsedListItem) => {
-            const cryptoSymbol = crypto?.symbol || "";
-            const quoteChange = crypto?.percent_24h || 0;
-            const fiatCurrency = fiatKeys?.menu?.[selected] || { sign: "$" };
-            const isNegative = quoteChange < 0;
-            const quoteChangePrefix = isNegative ? "" : "+";
+      {cryptoList?.length ? (
+        cryptoList?.map((crypto: CryproParsedListItem) => {
+          const cryptoSymbol = crypto?.symbol || "";
+          const quoteChange = crypto?.percent_24h || 0;
+          const fiatCurrency = fiatKeys?.menu?.[selected] || { sign: "$" };
+          const isNegative = quoteChange < 0;
+          const quoteChangePrefix = isNegative ? "" : "+";
 
-            const priceFormatted = fiatAmountDisplayFormatter(
-              crypto?.price,
-              crypto?.price < 0.01 && crypto?.price > 0 ? 4 : 2
-            );
+          const priceFormatted = fiatAmountDisplayFormatter(
+            crypto?.price,
+            crypto?.price < 0.01 && crypto?.price > 0 ? 4 : 2
+          );
 
-            const logo = logos[crypto?.id] || {
-              src: crypto?.logo || AppAssetImages.coin,
-              alt: "CoinMarketCap Crypto Logo",
-            };
+          const logo = logos[crypto?.id] || {
+            src: crypto?.logo || AppAssetImages.coin,
+            alt: "CoinMarketCap Crypto Logo",
+          };
 
-            return (
-              <Box key={`${crypto?.id}`} className="t-row">
-                <Box className="t-cell name">
-                  <Image
-                    src={logo?.src || AppAssetImages.coin}
-                    alt={logo?.alt || "CoinMarketCap Crypto Logo"}
-                    width={32}
-                    height={32}
-                  />
-                  <p>{crypto?.name}</p>
-                </Box>
-                <Box className="t-cell price">
-                  <p>{`${fiatCurrency?.sign || ""}${priceFormatted}`}</p>
-                </Box>
-                <Box className={`t-cell change ${isNegative ? "error" : ""}`}>
-                  <p>
-                    {`${quoteChangePrefix}${fiatAmountDisplayFormatter(
-                      quoteChange
-                    )}%`}
-                  </p>
-                </Box>
-                <Box className="t-cell supply">
-                  <p>
-                    {`${fiatAmountDisplayFormatter(
-                      crypto?.totalSupply
-                    )} ${cryptoSymbol}`}
-                  </p>
-                </Box>
-                <Box className="t-cell action">
-                  <RiAddLargeFill />
-                  <MdOpenInNew />
-                </Box>
+          return (
+            <Box key={`${crypto?.id}`} className="t-row">
+              <Box className="t-cell name">
+                <Image
+                  src={logo?.src || AppAssetImages.coin}
+                  alt={logo?.alt || "CoinMarketCap Crypto Logo"}
+                  width={32}
+                  height={32}
+                />
+                <p>{crypto?.name}</p>
               </Box>
-            );
-          })
-        : loadingItems.map((_, index) => {
-            const loadingColumns = Array.from({ length: 4 }, (_, i) => i + 1);
-            return (
-              <Box key={`key${index}`} className="t-row-loading">
-                <Box className="name">
-                  <Skeleton
-                    animation="wave"
-                    variant="circular"
-                    width={35}
-                    height={35}
-                  />
-                  <Skeleton animation="wave" height={13.5} width="100%" />
-                </Box>
-                {loadingColumns?.map((_, childIndex) => (
-                  <Skeleton
-                    key={`key${childIndex}`}
-                    animation="wave"
-                    height={13.5}
-                    width="100%"
-                  />
-                ))}
+              <Box className="t-cell price">
+                <p>{`${fiatCurrency?.sign || ""}${priceFormatted}`}</p>
               </Box>
-            );
-          })}
+              <Box className={`t-cell change ${isNegative ? "error" : ""}`}>
+                <p>
+                  {`${quoteChangePrefix}${fiatAmountDisplayFormatter(
+                    quoteChange
+                  )}%`}
+                </p>
+              </Box>
+              <Box className="t-cell supply">
+                <p>
+                  {`${fiatAmountDisplayFormatter(
+                    crypto?.totalSupply
+                  )} ${cryptoSymbol}`}
+                </p>
+              </Box>
+              <Box className="t-cell action">
+                <RiAddLargeFill />
+                <MdOpenInNew />
+              </Box>
+            </Box>
+          );
+        })
+      ) : searchActive ? (
+        <p>Empty Here</p>
+      ) : (
+        loadingItems.map((_, index) => {
+          const loadingColumns = Array.from({ length: 4 }, (_, i) => i + 1);
+          return (
+            <Box key={`key${index}`} className="t-row-loading">
+              <Box className="name">
+                <Skeleton
+                  animation="wave"
+                  variant="circular"
+                  width={35}
+                  height={35}
+                />
+                <Skeleton animation="wave" height={13.5} width="100%" />
+              </Box>
+              {loadingColumns?.map((_, childIndex) => (
+                <Skeleton
+                  key={`key${childIndex}`}
+                  animation="wave"
+                  height={13.5}
+                  width="100%"
+                />
+              ))}
+            </Box>
+          );
+        })
+      )}
     </Box>
   );
 };

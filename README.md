@@ -2,6 +2,17 @@
 
 A simple cryptocurrency tracker built with **Next.js**, **Redux**, and **Axios**, using data from the **CoinMarketCap API**.
 
+## Getting Started
+
+```bash
+git clone https://github.com/jehuzubiri/crypto-portfolio-tracker.git
+cd crypto-portfolio-tracker
+
+npm i
+npm i -g env-cmd
+npm run development
+```
+
 ## Features
 
 - Theme (Light/Dark Mode)
@@ -19,13 +30,7 @@ A simple cryptocurrency tracker built with **Next.js**, **Redux**, and **Axios**
 - CoinMarketCap (API)
 - MUI (Design System)
 
-## Getting Started
+## Comments & Suggestions
 
-```bash
-git clone https://github.com/jehuzubiri/crypto-portfolio-tracker.git
-cd crypto-portfolio-tracker
-
-npm i
-npm i -g env-cmd
-npm run development
-```
+- Adding or removing a profile must be done through the company's internal API.
+- The services/API setup can be improved and made dynamic in case this app is used in a real-world application.

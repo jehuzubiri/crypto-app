@@ -13,7 +13,8 @@ import useStyles from "../../useMainCryptosStyles";
 
 const ListMobile: React.FC<{
   cryptoList: CryproParsedListItem[];
-}> = ({ cryptoList = [] }) => {
+  searchActive: boolean;
+}> = ({ cryptoList = [], searchActive = false }) => {
   const styles = useStyles();
 
   const { cryptos, fiatKeys } = useSelector((state: RootState) => state.app);
@@ -22,9 +23,7 @@ const ListMobile: React.FC<{
 
   return (
     <Box sx={styles.listMobile}>
-      {!cryptoList?.length ? (
-        <LoaderMobile items={10} />
-      ) : (
+      {cryptoList?.length ? (
         cryptoList.map((crypto: CryproParsedListItem) => {
           const cryptoSymbol = crypto?.symbol || "";
           const quoteChange = crypto?.percent_24h || 0;
@@ -71,6 +70,10 @@ const ListMobile: React.FC<{
             </Box>
           );
         })
+      ) : searchActive ? (
+        <p>Empty Here</p>
+      ) : (
+        <LoaderMobile items={10} />
       )}
     </Box>
   );
