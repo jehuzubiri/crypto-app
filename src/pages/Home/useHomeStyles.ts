@@ -14,6 +14,7 @@ const useStyles = (): TheAnyTheme => {
       gap: "1.25rem",
       width: "100%",
       maxWidth: "70rem",
+      paddingBottom: "3rem",
       // section 1
       "& > div:nth-of-type(1)": {
         ...theme?.cxFlexBox?.col,
@@ -47,10 +48,8 @@ const useStyles = (): TheAnyTheme => {
       "& > div:nth-of-type(2)": {
         border: `1px solid ${theme.palette?.grey?.[200]}`,
         backgroundColor: theme.palette?.background?.default,
-        padding: "1rem",
         borderRadius: "0.75rem",
         overflow: "hidden",
-        // minHeight: "50rem",
       },
     },
   };

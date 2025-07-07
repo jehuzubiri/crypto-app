@@ -9,7 +9,6 @@ export interface TypesTableData {
   list: TheAnyConst[];
   logos: Object;
   loading: boolean;
-  logoIsLoading: boolean;
   sortBy: "amount" | "market_cap";
   pagination: {
     page: number;

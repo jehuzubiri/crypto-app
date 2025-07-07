@@ -1,96 +1,88 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Skeleton } from "@mui/material";
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@/redux/store";
 import { AppAssetImages } from "@/constant/App.const";
-import { TypesTableData } from "@/models/Redux.model";
+import { TheAnyConst } from "@/models/General.model";
 
-import useStyles from "./useTrendingCryptosStyles";
 import { fiatAmountDisplayFormatter } from "@/utils/General.helpers";
+import useStyles from "./useTrendingCryptosStyles";
+import LoaderMobile from "../Custom/LoaderMobile";
 
 const TrendingCryotos: React.FC = () => {
-  const styles = useStyles();
   const { trending, fiatKeys } = useSelector((state: RootState) => state.app);
-  const { logos, list }: TypesTableData = trending;
+  const { logos, list, loading } = trending;
   const { selected } = fiatKeys;
 
-  const isLoading = !list?.length;
-  const loadingItems = Array.from({ length: 5 }, (_, i) => i + 1);
+  const styles = useStyles();
+  const isLoading = !list?.length || loading;
 
   return (
     <Box sx={styles.root}>
       <p>Trending Stocks (1h ago)</p>
-      <Box className={isLoading ? "loading" : "list"}>
-        {isLoading
-          ? loadingItems.map((_, index) => (
-              <Box key={`key${index}`}>
-                <Skeleton
-                  animation="wave"
-                  variant="circular"
-                  width={35}
-                  height={35}
-                />
+      <Box className="list">
+        {isLoading ? (
+          <LoaderMobile />
+        ) : (
+          list.map((crypto: TheAnyConst, index) => {
+            const fiatCurrency = fiatKeys?.menu?.[selected] || { sign: "$" };
+            const cryptoSymbol = crypto?.symbol || "";
+            const quoteChange = crypto?.quote[selected]?.percent_change_1h || 0;
+            const isNegative = quoteChange < 0;
+            const quoteChangePrefix = isNegative ? "" : "+";
+            const quoteChangeRatio =
+              (crypto?.quote[selected]?.price || 0) * (quoteChange / 100);
+
+            const cryptoTotalSupply = fiatAmountDisplayFormatter(
+              crypto?.total_supply || 0
+            );
+            const quotePrice = fiatAmountDisplayFormatter(
+              crypto?.quote[selected]?.price || 0,
+              quoteChangeRatio < 0.01 && quoteChangeRatio > 0 ? 4 : 2
+            );
+
+            const logo = logos[crypto?.id] || {
+              src: AppAssetImages.coin,
+              alt: "CoinMarketCap Crypto Logo",
+            };
+
+            const valueA = `${cryptoTotalSupply} ${cryptoSymbol}`;
+            const valueB = `${
+              fiatCurrency?.sign || ""
+            }${quotePrice} (${selected})`;
+            const valueC = `${quoteChangePrefix}${fiatAmountDisplayFormatter(
+              quoteChangeRatio,
+              quoteChangeRatio < 0.01 && quoteChangeRatio > 0 ? 6 : 2
+            )} (${fiatAmountDisplayFormatter(quoteChange)}%)`;
+
+            return (
+              <Box
+                key={`key${index}`}
+                onClick={() => console.log({ ID: crypto })}
+                className="list-item"
+              >
                 <Box>
-                  <Skeleton animation="wave" height={17.5} width="60%" />
-                  <Skeleton animation="wave" height={13.5} width="80%" />
+                  <Image
+                    src={logo?.src || AppAssetImages.coin}
+                    alt={logo?.alt || "CoinMarketCap Crypto Logo"}
+                    width={32}
+                    height={32}
+                  />
+                  <Box>
+                    <p>{crypto?.name}</p>
+                    <p>{valueA}</p>
+                  </Box>
+                </Box>
+                <Box>
+                  <p>{valueB}</p>
+                  <p className={isNegative ? "error" : ""}>{valueC}</p>
                 </Box>
               </Box>
-            ))
-          : list.map((data, index) => {
-              const logo = logos[data?.id] || null;
-              const fiatCurrency = fiatKeys?.menu?.[selected] || { sign: "$" };
-              const cryptoSymbol = data?.symbol || "";
-              const quoteChange = data?.quote.USD.percent_change_1h;
-              const isNegative = quoteChange <= 0;
-              const quoteChangePrefix = isNegative ? "" : "+";
-              const quoteChangeRatio =
-                (data?.quote?.USD?.price || 0) * (quoteChange / 100);
-
-              const cryptoTotalSupply = fiatAmountDisplayFormatter(
-                data?.total_supply || 0
-              );
-              const quotePrice = fiatAmountDisplayFormatter(
-                data?.quote?.USD?.price || 0
-              );
-
-              const valueA = `${cryptoTotalSupply} ${cryptoSymbol}`;
-
-              const valueB = `${
-                fiatCurrency?.sign || ""
-              }${quotePrice} (${selected})`;
-
-              const valueC = `${quoteChangePrefix}${fiatAmountDisplayFormatter(
-                quoteChangeRatio,
-                quoteChangeRatio < 0.01 && quoteChangeRatio > 0 ? 4 : 2
-              )} (${fiatAmountDisplayFormatter(quoteChange)}%)`;
-
-              return (
-                <Box
-                  key={`key${index}`}
-                  onClick={() => console.log({ ID: data?.id })}
-                  className="list-item"
-                >
-                  <Box>
-                    <Image
-                      src={logo.src || AppAssetImages.coin}
-                      alt={logo.alt || "CoinMarketCap Crypto Logo"}
-                      width={32}
-                      height={32}
-                    />
-                    <Box>
-                      <p>{data?.name}</p>
-                      <p>{valueA}</p>
-                    </Box>
-                  </Box>
-                  <Box>
-                    <p>{valueB}</p>
-                    <p className={isNegative ? "error" : ""}>{valueC}</p>
-                  </Box>
-                </Box>
-              );
-            })}
+            );
+          })
+        )}
       </Box>
     </Box>
   );

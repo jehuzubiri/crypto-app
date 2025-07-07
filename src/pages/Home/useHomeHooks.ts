@@ -19,9 +19,9 @@ const useHomeHooks = (
   const getInitialCryptoLogos = useCallback(
     async (signal?: AbortSignal) => {
       try {
-        dispatch(setCryptos({ logoIsLoading: false }));
         if (signal?.aborted) return;
         if (!cryptoList?.ok || !cryptoList?.data?.length) return;
+        //@TODO: filter cryptoList removed all exists on portfolio
         dispatch(setCryptos({ list: cryptoList?.data }));
         // const ids = cryptoList?.data?.map((item: TheAnyConst) => item.id);
         // const resLogos = await getCryptoLogos(ids, signal);
@@ -38,10 +38,9 @@ const useHomeHooks = (
             };
           });
         }
-        dispatch(setCryptos({ logoIsLoading: false, logos }));
+        dispatch(setCryptos({ logos }));
       } catch (error) {
         console.error({ ERROR_PAGE_HOME_GET_CRYPTO_LOGOS: error });
-        dispatch(setCryptos({ logoIsLoading: false }));
       }
     },
     [cryptoList]
@@ -50,7 +49,6 @@ const useHomeHooks = (
   const getInitialTrendingLogos = useCallback(
     async (signal?: AbortSignal) => {
       try {
-        dispatch(setTrendingCryptos({ logoIsLoading: false }));
         if (signal?.aborted) return;
         if (!cryptoTrending?.ok || !cryptoTrending?.data?.length) return;
         dispatch(setTrendingCryptos({ list: cryptoTrending?.data }));
@@ -70,10 +68,9 @@ const useHomeHooks = (
             };
           });
         }
-        dispatch(setTrendingCryptos({ logoIsLoading: false, logos }));
+        dispatch(setTrendingCryptos({ logos }));
       } catch (error) {
         console.error({ ERROR_PAGE_HOME_GET_CRYPTO_LOGOS: error });
-        dispatch(setTrendingCryptos({ logoIsLoading: false }));
       }
     },
     [cryptoTrending]
@@ -82,7 +79,6 @@ const useHomeHooks = (
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-    dispatch(setCryptos({ logoIsLoading: true }));
     getInitialCryptoLogos(signal);
 
     return () => {
@@ -93,7 +89,6 @@ const useHomeHooks = (
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-    dispatch(setTrendingCryptos({ logoIsLoading: true }));
     getInitialTrendingLogos(signal);
 
     return () => {

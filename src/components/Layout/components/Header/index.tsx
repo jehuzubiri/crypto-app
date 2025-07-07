@@ -32,10 +32,10 @@ const LayoutHeader: React.FC = () => {
           src={AppAssetImages.logo}
           width={40}
           height={40}
-          alt="Lorem Ipsum Logo"
+          alt="Crypto Tracker Logo"
         />
         <Box>
-          <p>Crypto Tracker</p>
+          <p>CRYPTO TRACKER</p>
           <p>NextJS/TypeScript CoinMarketCap</p>
         </Box>
       </Box>

@@ -11,3 +11,15 @@ export interface ServicesApiResponse {
   error?: TheAnyConst;
   config?: TheAnyConst;
 }
+
+export interface CryproParsedListItem {
+  id: number | string;
+  name: string;
+  symbol: string;
+  price: number;
+  marketCap: number;
+  volume24h: number;
+  percent_24h: number;
+  totalSupply: number;
+  logo?: TheAnyConst;
+}

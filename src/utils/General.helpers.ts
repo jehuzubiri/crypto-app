@@ -1,18 +1,24 @@
 import { TheAnyConst } from "@/models/General.model";
 
-export const getCryptoTableDataFromRaw = (cryptocurrencies: TheAnyConst) => {
+export const getCryptoTableDataFromRaw = (
+  cryptocurrencies: [] | TheAnyConst,
+  selectedFiat: string | "USD" = "USD"
+) => {
+  if (!cryptocurrencies || !cryptocurrencies?.length) return [];
+
   return cryptocurrencies.map((item: TheAnyConst) => {
-    const quote = item.quote?.USD || {};
+    const quote = item.quote[selectedFiat] || {};
 
     return {
+      id: item.id,
+      logo: item?.logo || null,
       name: item.name,
       symbol: item.symbol,
-      price: Number(quote.price?.toFixed(2)) || 0,
-      percent_24h: Number(quote.percent_change_24h?.toFixed(2)) || 0,
-      marketCap: Number(quote.market_cap?.toFixed(2)) || 0,
-      volume24h: Number(quote.volume_24h?.toFixed(2)) || 0,
-      volumeChange24h: Number(quote.volume_change_24h?.toFixed(2)) || 0,
-      circulatingSupply: Number(item.circulating_supply?.toFixed(2)) || 0,
+      price: quote?.price || 0,
+      marketCap: quote?.market_cap || 0,
+      volume24h: quote?.volume_24h || 0,
+      percent_24h: quote?.percent_change_24h || 0,
+      totalSupply: item.total_supply || 0,
     };
   });
 };
@@ -30,10 +36,10 @@ export const fiatAmountDisplayFormatter = (
   if (absValue >= 1_000_000) {
     const millions = n / 1_000_000;
 
-    // Show with "+" if not cleanly divisible by 100,000
+    // show with "+" if not cleanly divisible by 100,000
     const hasExtra = n % 100_000 !== 0;
 
-    // If in billions, show raw M value (e.g. 1,000M)
+    // if in billions, show raw M value (e.g. 1,000M)
     if (absValue >= 1_000_000_000) {
       return `${Math.round(millions).toLocaleString()}M`;
     }
@@ -41,12 +47,12 @@ export const fiatAmountDisplayFormatter = (
     return `${millions.toFixed(1)}M${hasExtra ? "+" : ""}`;
   }
 
-  // If value is less than 1, return fixed decimal without comma formatting
+  // if value is less than 1, return fixed decimal without comma formatting
   if (absValue < 1) {
     return Number(n).toFixed(decimal);
   }
 
-  // Format values >= 1 with commas
+  // format values >= 1 with commas
   return Number(n)
     .toFixed(decimal)
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");

@@ -13,7 +13,7 @@ const useStyles = (): TheAnyTheme => {
       ...theme?.cxFlexBox?.col,
       "& > p": {
         ...theme.cxTypography.paragraph,
-        fontWeight: 600,
+        fontWeight: 800,
         color: isLightMode ? theme.palette?.grey?.[100] : theme.palette?.text,
         backgroundColor: theme.palette?.grey?.[isLightMode ? 500 : 400],
         padding: "0.75rem 1rem 0.5rem 1rem",
@@ -26,6 +26,7 @@ const useStyles = (): TheAnyTheme => {
         [LAPTOP]: {
           height: "100%",
           maxHeight: "18rem",
+          minHeight: "18rem",
         },
       },
     },

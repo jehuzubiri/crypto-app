@@ -25,6 +25,7 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
       },
     },
     header: {
+      zIndex: 999,
       ...theme?.cxFlexBox?.rowCenterBetween,
       borderBottom: `1px solid ${theme.palette?.grey?.[300]}`,
       backgroundColor: theme.palette?.background?.default,
@@ -46,12 +47,15 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
           },
           "& > p:nth-of-type(1)": {
             ...theme.cxTypography.subHeader,
+            fontWeight: 900,
             color: theme.palette?.text,
           },
           "& > p:nth-of-type(2)": {
             ...theme.cxTypography.paragraph,
-            fontWeight: 500,
-            color: theme.palette?.grey?.[isLightMode ? 500 : 900],
+            color: isLightMode
+              ? theme.palette?.grey?.[400]
+              : theme.palette?.text,
+            fontWeight: 700,
           },
         },
       },
@@ -113,16 +117,15 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
       ...theme?.cxFlexBox?.colCenter,
       borderTop: `1px solid ${theme.palette?.grey?.[300]}`,
       backgroundColor: theme.palette?.background?.default,
-      padding: "1rem",
-      paddingBottom: "2rem",
+      padding: "1.5rem",
       [TABLET]: {
-        padding: "1.5rem",
-        paddingBottom: "3rem",
+        padding: "1rem",
       },
       "& > p": {
         ...theme.cxTypography.tag,
         color: theme.palette?.text,
         textAlign: "center",
+        fontWeight: 300,
       },
     },
   };

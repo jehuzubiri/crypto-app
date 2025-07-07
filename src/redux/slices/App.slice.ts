@@ -12,7 +12,6 @@ const initialListState: TypesTableData = {
   list: [],
   logos: {},
   loading: false,
-  logoIsLoading: false,
   sortBy: "amount",
   pagination: {
     page: 1,

@@ -3,6 +3,7 @@ import { useThemeContext } from "@/theme/ThemeContext";
 
 import { AppRandomColors } from "@/constant/App.const";
 import { TheAnyConst } from "@/models/General.model";
+import { fiatAmountDisplayFormatter } from "@/utils/General.helpers";
 
 interface Size {
   width: number;
@@ -43,7 +44,7 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
     },
     yaxis: {
       labels: {
-        formatter: (val: number) => `${val.toFixed(2)}%`,
+        formatter: (val: number) => `${val}%`,
         style: {
           colors: "#001e3c",
           fontSize: "12px",
@@ -52,7 +53,7 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
     },
     tooltip: {
       y: {
-        formatter: (val: number) => `${val.toFixed(2)}%`,
+        formatter: (val: number) => `${fiatAmountDisplayFormatter(val)}%`,
       },
     },
     fill: {
@@ -118,7 +119,7 @@ const useCryptoChartHook = (chartSize: Size, data: TheAnyConst) => {
         ...prev.tooltip,
         theme: mode,
         y: {
-          formatter: (val: number) => `${val.toFixed(2)}%`,
+          formatter: (val: number) => `${fiatAmountDisplayFormatter(val)}%`,
         },
       },
       legend: {

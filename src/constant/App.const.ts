@@ -22,11 +22,11 @@ export const AppAssetImages = {
 };
 
 export const AppRandomColors = [
-  "#FF6B6B",
-  "#6BCB77",
-  "#4D96FF",
   "#FFD93D",
+  "#4D96FF",
+  "#FF6B6B",
   "#845EC2",
+  "#6BCB77",
   "#FF9671",
   "#00C9A7",
   "#F9F871",

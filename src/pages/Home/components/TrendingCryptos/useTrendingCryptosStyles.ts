@@ -10,7 +10,7 @@ const useStyles = (): TheAnyTheme => {
     root: {
       "& > p": {
         ...theme.cxTypography.paragraph,
-        fontWeight: 600,
+        fontWeight: 800,
         color: isLightMode ? theme.palette?.grey?.[100] : theme.palette?.text,
         backgroundColor: theme.palette?.grey?.[isLightMode ? 500 : 400],
         padding: "0.75rem 1rem 0.5rem 1rem",
@@ -44,7 +44,7 @@ const useStyles = (): TheAnyTheme => {
               // ITEM -left texts
               "& > p": {
                 ...theme.cxTypography.paragraph,
-                fontWeight: 800,
+                fontWeight: 700,
                 color: theme.palette?.text,
                 whiteSpace: "nowrap",
               },
@@ -61,7 +61,7 @@ const useStyles = (): TheAnyTheme => {
             // ITEM -right texts
             "& > p": {
               ...theme.cxTypography.paragraph,
-              fontWeight: 800,
+              fontWeight: 700,
               color: theme.palette?.text,
               whiteSpace: "nowrap",
               textAlign: "right",
@@ -75,21 +75,6 @@ const useStyles = (): TheAnyTheme => {
                 color: theme.palette?.error?.main,
               },
             },
-          },
-        },
-      },
-      "& > div.loading": {
-        ...theme?.cxFlexBox?.col,
-        gap: "1rem",
-        padding: "1rem 1rem 1.5rem 1rem",
-        "& > div": {
-          ...theme?.cxFlexBox?.rowStartBetween,
-          gap: "0.75rem",
-          "& > span": {
-            minWidth: "35px",
-          },
-          "& > div": {
-            width: "100%",
           },
         },
       },
