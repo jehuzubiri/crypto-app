@@ -29,8 +29,3 @@ npm run development
 - Axios (API Requests)
 - CoinMarketCap (API)
 - MUI (Design System)
-
-## Comments & Suggestions
-
-- Adding or removing a profile must be done through the company's internal API.
-- The services/API setup can be improved and made dynamic in case this app is used in a real-world application.

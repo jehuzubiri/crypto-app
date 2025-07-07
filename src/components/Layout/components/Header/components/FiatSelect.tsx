@@ -37,6 +37,9 @@ const FiatSelect: React.FC<{
                   className={isSelected ? "selected" : ""}
                   onClick={() => {
                     if (option?.symbol && !isSelected) {
+                      alert(
+                        "Hi Daniel, there supposed to be an APIs here, but it seems i did maximized my deadline. :("
+                      );
                       dispatch(setFiatKeys({ selected: option.symbol }));
                     }
                     setFiatMenuOpen(false);
