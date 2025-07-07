@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@mui/material";
 import { FaChevronDown } from "react-icons/fa";
 import { RiAddLargeFill } from "react-icons/ri";
 import { MdOpenInNew } from "react-icons/md";
+import { PiMinus } from "react-icons/pi";
 
 import { RootState } from "@/redux/store";
 import { AppAssetImages, MainCryptoTableColumns } from "@/constant/App.const";
@@ -14,6 +15,7 @@ import { fiatAmountDisplayFormatter } from "@/utils/General.helpers";
 import Empty from "../../../Custom/Empty";
 import LoaderWeb from "../../../Custom/LoaderWeb";
 import useStyles from "../../useMainCryptosStyles";
+import { addToPortfolio, removeToPortfolio } from "@/redux/slices/App.slice";
 
 type TableColumnTypes = "name" | "price" | "change" | "supply";
 
@@ -35,6 +37,7 @@ const List: React.FC<{
   columnHeaderIsSelected,
   handleColumnHeaderClick,
 }) => {
+  const dispatch = useDispatch();
   const styles = useStyles();
   const { cryptos, fiatKeys } = useSelector((state: RootState) => state.app);
   const { logos, loading: cryptosIsLoading } = cryptos;
@@ -119,8 +122,32 @@ const List: React.FC<{
                 </p>
               </Box>
               <Box className="t-cell action">
-                <RiAddLargeFill />
-                <MdOpenInNew />
+                {cryptosIsLoading ? (
+                  <CircularProgress size="18px" />
+                ) : (
+                  <>
+                    {activeTab === "all" ? (
+                      <RiAddLargeFill
+                        onClick={() =>
+                          dispatch(
+                            addToPortfolio({
+                              ...crypto,
+                              logo: logo?.src || AppAssetImages.coin,
+                            })
+                          )
+                        }
+                      />
+                    ) : (
+                      <PiMinus
+                        onClick={() =>
+                          dispatch(removeToPortfolio({ ...crypto }))
+                        }
+                      />
+                    )}
+
+                    <MdOpenInNew onClick={() => console.log(crypto)} />
+                  </>
+                )}
               </Box>
             </Box>
           );

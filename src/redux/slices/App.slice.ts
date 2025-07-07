@@ -7,6 +7,7 @@ import {
   TypesSelectedCrypto,
   TypesTableData,
 } from "@/models/Redux.model";
+import { CryproParsedListItem } from "@/models/General.model";
 
 const initialListState: TypesTableData = {
   list: [],
@@ -37,14 +38,23 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    addToProtfolio: (state, action: PayloadAction<Partial<Object>>) => {
+    addToPortfolio: (
+      state,
+      action: PayloadAction<Partial<CryproParsedListItem>>
+    ) => {
+      state.cryptos.list = state.cryptos.list.filter(
+        (crypto) => crypto.id != action.payload.id
+      );
       state.portfolio.push(action.payload);
     },
-    removeToProtfolio: (
+    removeToPortfolio: (
       state,
-      action: PayloadAction<Partial<string | number>>
+      action: PayloadAction<Partial<CryproParsedListItem>>
     ) => {
-      state.portfolio.filter((currency) => currency?.id != action.payload);
+      state.portfolio = state.portfolio.filter(
+        (currency) => currency?.id != action.payload.id
+      );
+      state.cryptos.list.unshift(action.payload);
     },
     setFiatKeys: (state, action: PayloadAction<Partial<TypesFiatKeys>>) => {
       state.fiatKeys = handleReducersPayload(
@@ -85,8 +95,8 @@ const appSlice = createSlice({
 
 const { reducer, actions } = appSlice;
 export const {
-  addToProtfolio,
-  removeToProtfolio,
+  addToPortfolio,
+  removeToPortfolio,
   setCryptos,
   setFiatKeys,
   setSelectedCrypto,

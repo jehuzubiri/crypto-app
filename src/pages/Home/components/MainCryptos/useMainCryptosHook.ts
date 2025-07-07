@@ -120,11 +120,12 @@ const useMainCryptosHook = () => {
 
           if (res?.ok && res?.data?.length) {
             const { list, logos } = await getLogosByCryptos(res);
-            //@TODO: check portfolio ids and exclude / getCryptoTableDataFromRaw
+            const portfolioIds = portfolio?.map((c) => c.id) || [];
+
             dispatch(
               setCryptos({
                 logos,
-                list: getCryptoTableDataFromRaw(list, selected),
+                list: getCryptoTableDataFromRaw(list, selected, portfolioIds),
               })
             );
           }
@@ -139,7 +140,7 @@ const useMainCryptosHook = () => {
         controller.abort();
       };
     },
-    [sortSettings, settings.activeTab, selected, cryptos?.loading]
+    [sortSettings, settings.activeTab, selected, cryptos?.loading, portfolio]
   );
 
   const columnHeaderIsSelected = (key: TableColumnTypes) => {

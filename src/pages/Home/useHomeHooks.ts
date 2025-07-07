@@ -21,7 +21,9 @@ const useHomeHooks = (
   cryptoTrending: ServicesApiResponse
 ) => {
   const dispatch = useDispatch();
-  const { fiatKeys, cryptos } = useSelector((state: RootState) => state.app);
+  const { fiatKeys, cryptos, portfolio } = useSelector(
+    (state: RootState) => state.app
+  );
   const { selected } = fiatKeys;
 
   const getLogosByCryptos = async (cryptoRes: ServicesApiResponse) => {
@@ -60,13 +62,13 @@ const useHomeHooks = (
         dispatch(setCryptos({ loading: true }));
 
         const { list, logos } = await getLogosByCryptos(cryptoList);
+        const portfolioIds = portfolio?.map((c) => c.id) || [];
 
-        //@TODO: check portfolio ids and exclude
         dispatch(
           setCryptos({
             logos,
             loading: false,
-            list: getCryptoTableDataFromRaw(list, selected),
+            list: getCryptoTableDataFromRaw(list, selected, portfolioIds),
           })
         );
       } catch (error) {
@@ -74,7 +76,7 @@ const useHomeHooks = (
         dispatch(setCryptos({ loading: false }));
       }
     },
-    [cryptoList]
+    [cryptoList, portfolio]
   );
 
   const getInitialTrendingLogos = useCallback(
@@ -119,9 +121,10 @@ const useHomeHooks = (
 
       if (res?.ok && res?.data?.length) {
         const { list, logos: newLogos } = await getLogosByCryptos(res);
-        //@TODO: check portfolio ids and exclude / getCryptoTableDataFromRaw
+
         const isNextPage = cryptos.page < params.start;
-        const newList = getCryptoTableDataFromRaw(list, selected);
+        const portfolioIds = portfolio?.map((c) => c.id) || [];
+        const newList = getCryptoTableDataFromRaw(list, selected, portfolioIds);
 
         dispatch(
           setCryptos({
@@ -144,7 +147,7 @@ const useHomeHooks = (
     return () => {
       controller.abort();
     };
-  }, [selected, cryptos?.sort, cryptos?.page, cryptos?.list]);
+  }, [selected, cryptos?.sort, cryptos?.page, cryptos?.list, portfolio]);
 
   useEffect(() => {
     const abortController = new AbortController();
