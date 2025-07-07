@@ -33,7 +33,12 @@ const useCryptoDetailsHook = (slug: string) => {
     async (signal: AbortSignal) => {
       try {
         const res = await getCryptoDetails(slug, signal);
-        if (!res[0]?.ok && res[0]?.error?.statusCode == 404) {
+
+        if (
+          !res[0]?.ok &&
+          (res[0]?.error?.statusCode == 404 ||
+            res[0]?.error?.status?.error_code == 400)
+        ) {
           router.push("/");
         }
 
