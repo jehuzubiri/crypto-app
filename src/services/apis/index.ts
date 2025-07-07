@@ -14,6 +14,13 @@ export const getCryptos = async (
   );
 };
 
+export const getCryptoDetails = async (slug: string, signal?: AbortSignal) => {
+  return await Promise.all([
+    API_MAIN.postProxy("cryptocurrency/info", { slug }, signal),
+    API_MAIN.postProxy("cryptocurrency/quotes/latest", { slug }, signal),
+  ]);
+};
+
 export const getCryptoLogos = async (
   ids: Array<number | string>,
   signal?: AbortSignal

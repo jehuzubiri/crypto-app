@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 import { RootState } from "@/redux/store";
 import { AppAssetImages } from "@/constant/App.const";
@@ -16,6 +17,7 @@ const TrendingCryotos: React.FC = () => {
   const { logos, list, loading } = trending;
   const { selected } = fiatKeys;
 
+  const router = useRouter();
   const styles = useStyles();
   const isLoading = !list?.length || loading;
 
@@ -60,7 +62,7 @@ const TrendingCryotos: React.FC = () => {
             return (
               <Box
                 key={`key${index}`}
-                onClick={() => console.log({ ID: crypto })}
+                onClick={() => router.push(crypto.slug)}
                 className="list-item"
               >
                 <Box>

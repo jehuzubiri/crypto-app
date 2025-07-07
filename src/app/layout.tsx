@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { AppConfig } from "@/constant/App.const";
+import { getFiatCurrenciesSSR } from "@/services/apis";
+
 import Providers from "@/components/Provider";
 import MainLayout from "@/components/Layout";
-
-import { getFiatCurrenciesSSR } from "@/services/apis";
-// import { dummyApiFiat } from "@/constant/Dummy.const";
 
 // @DESC: init app font
 import localFont from "next/font/local";

@@ -94,7 +94,7 @@ const useStyle = ({ headerHeight, position }: StyleProps): TheAnyTheme => {
         ...theme?.cxFlexBox?.col,
         width: "100%",
         overflowY: "auto",
-        maxHeight: "10rem",
+        maxHeight: "16rem",
         padding: "0.25rem 0",
         "& > p": {
           ...theme.cxTypography.paragraph,

@@ -23,7 +23,7 @@ export const customTheme: CustomThemeOptions = {
       color: "white",
       fontSize: "1.5em",
       fontWeight: "800",
-      lineHeight: "1.8125em",
+      lineHeight: "1.25em",
       letterSpacing: "0.01em",
     },
     subHeader: {

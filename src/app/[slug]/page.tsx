@@ -1,13 +1,12 @@
-"use client";
+import CryptoDetails from "@/pages/CryptoDetails";
+import React from "react";
 
-import { useRouter } from "next/navigation";
-
-export default function Page() {
-  const router = useRouter();
-
-  return (
-    <section>
-      Sample Slug <button onClick={() => router.push("/")}>Click</button>
-    </section>
-  );
+interface PageProps {
+  params: { slug: string };
 }
+
+const SlugPage = ({ params }: PageProps) => {
+  return <CryptoDetails slug={params.slug} />;
+};
+
+export default SlugPage;

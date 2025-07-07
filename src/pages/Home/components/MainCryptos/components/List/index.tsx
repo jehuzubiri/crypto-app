@@ -16,6 +16,7 @@ import Empty from "../../../Custom/Empty";
 import LoaderWeb from "../../../Custom/LoaderWeb";
 import useStyles from "../../useMainCryptosStyles";
 import { addToPortfolio, removeToPortfolio } from "@/redux/slices/App.slice";
+import { useRouter } from "next/navigation";
 
 type TableColumnTypes = "name" | "price" | "change" | "supply";
 
@@ -38,6 +39,7 @@ const List: React.FC<{
   handleColumnHeaderClick,
 }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const styles = useStyles();
   const { cryptos, fiatKeys } = useSelector((state: RootState) => state.app);
   const { logos, loading: cryptosIsLoading } = cryptos;
@@ -145,7 +147,9 @@ const List: React.FC<{
                       />
                     )}
 
-                    <MdOpenInNew onClick={() => console.log(crypto)} />
+                    <MdOpenInNew
+                      onClick={() => router.push(`/${crypto?.slug}`)}
+                    />
                   </>
                 )}
               </Box>
