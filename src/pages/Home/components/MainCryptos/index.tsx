@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, InputAdornment, Tab, Tabs, TextField } from "@mui/material";
-import { MdOpenInNew } from "react-icons/md";
+import { Box, Tab, Tabs, TextField } from "@mui/material";
 
 import { getCryptoTableDataFromRaw } from "@/utils/General.helpers";
 import { dummyApiCryptoList } from "@/constant/Dummy.const";

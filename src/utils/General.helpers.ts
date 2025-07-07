@@ -1,26 +1,37 @@
 import { TheAnyConst } from "@/models/General.model";
 
 export const getCryptoTableDataFromRaw = (
-  cryptocurrencies: [] | TheAnyConst,
-  selectedFiat: string | "USD" = "USD"
+  cryptocurrencies: [] | TheAnyConst = [],
+  selectedFiat: string | "USD" = "USD",
+  excludeIds: [] | null = []
 ) => {
-  if (!cryptocurrencies || !cryptocurrencies?.length) return [];
+  if (!cryptocurrencies?.length) return [];
 
-  return cryptocurrencies.map((item: TheAnyConst) => {
-    const quote = item.quote[selectedFiat] || {};
+  return (
+    cryptocurrencies
+      // @ts-ignore
+      .filter((crypto: TheAnyConst) => !excludeIds?.includes(crypto?.id))
+      .map((crypto: TheAnyConst) => {
+        const quote = crypto.quote[selectedFiat] || {};
 
-    return {
-      id: item.id,
-      logo: item?.logo || null,
-      name: item.name,
-      symbol: item.symbol,
-      price: quote?.price || 0,
-      marketCap: quote?.market_cap || 0,
-      volume24h: quote?.volume_24h || 0,
-      percent_24h: quote?.percent_change_24h || 0,
-      totalSupply: item.total_supply || 0,
-    };
-  });
+        return {
+          logo: crypto?.logo || null,
+          price: quote?.price || 0,
+          marketCap: quote?.market_cap || 0,
+          volume24h: quote?.volume_24h || 0,
+          percent_24h: quote?.percent_change_24h || 0,
+          totalSupply: crypto.total_supply || 0,
+          // original properties
+          id: crypto.id,
+          slug: crypto.slug,
+          name: crypto.name,
+          symbol: crypto.symbol,
+          quote: crypto.quote,
+          circulating_supply: crypto.circulating_supply,
+          cmc_rank: crypto.cmc_rank,
+        };
+      })
+  );
 };
 
 export const fiatAmountDisplayFormatter = (

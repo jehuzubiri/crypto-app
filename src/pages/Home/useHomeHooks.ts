@@ -1,10 +1,12 @@
 import { useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // import { getCryptoLogos } from "@/services/apis";
 import { AppAssetImages } from "@/constant/App.const";
 import { ServicesApiResponse, TheAnyConst } from "@/models/General.model";
+import { getCryptoTableDataFromRaw } from "@/utils/General.helpers";
 import { setCryptos, setTrendingCryptos } from "@/redux/slices/App.slice";
+import { RootState } from "@/redux/store";
 import {
   dummyApiCryptoListLOGOs,
   dummyApiCryptoTrendingLOGOs,
@@ -15,6 +17,8 @@ const useHomeHooks = (
   cryptoTrending: ServicesApiResponse
 ) => {
   const dispatch = useDispatch();
+  const { fiatKeys } = useSelector((state: RootState) => state.app);
+  const { selected } = fiatKeys;
 
   const getInitialCryptoLogos = useCallback(
     async (signal?: AbortSignal) => {
@@ -22,7 +26,12 @@ const useHomeHooks = (
         if (signal?.aborted) return;
         if (!cryptoList?.ok || !cryptoList?.data?.length) return;
         //@TODO: filter cryptoList removed all exists on portfolio
-        dispatch(setCryptos({ list: cryptoList?.data }));
+        dispatch(
+          setCryptos({
+            list: getCryptoTableDataFromRaw(cryptoList?.data, selected),
+          })
+        );
+
         // const ids = cryptoList?.data?.map((item: TheAnyConst) => item.id);
         // const resLogos = await getCryptoLogos(ids, signal);
         const resLogos = dummyApiCryptoListLOGOs;
@@ -51,7 +60,11 @@ const useHomeHooks = (
       try {
         if (signal?.aborted) return;
         if (!cryptoTrending?.ok || !cryptoTrending?.data?.length) return;
-        dispatch(setTrendingCryptos({ list: cryptoTrending?.data }));
+        dispatch(
+          setTrendingCryptos({
+            list: getCryptoTableDataFromRaw(cryptoTrending?.data, selected),
+          })
+        );
 
         // const ids = cryptoTrending?.data?.map((item: TheAnyConst) => item.id);
         // const resLogos = await getCryptoLogos(ids, signal);
