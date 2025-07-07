@@ -1,25 +1,24 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { getCryptoTableDataFromRaw } from "@/utils/General.helpers";
 import { CryproParsedListItem } from "@/models/General.model";
 import { RootState } from "@/redux/store";
 
+type TableColumnTypes = "name" | "price" | "change" | "supply";
 interface SettingsFormData {
+  loading: boolean;
   searchedList: CryproParsedListItem[];
   searchKey: string;
   activeTab: "all" | "portfolio";
 }
 
-type TableColumnTypes = "name" | "price" | "change" | "supply";
-
 const useMainCryptosHook = () => {
   const { fiatKeys, cryptos, portfolio } = useSelector(
     (state: RootState) => state.app
   );
-  const { selected } = fiatKeys;
-  const { loading, list } = cryptos;
 
+  const { selected } = fiatKeys;
   const [sortSettings, setSortSettings] = useState<{
     active: "" | TableColumnTypes;
     isDesc: boolean;
@@ -29,6 +28,7 @@ const useMainCryptosHook = () => {
   });
 
   const [settings, setSettings] = useState<SettingsFormData>({
+    loading: false,
     searchedList: [],
     searchKey: "",
     activeTab: "all",
@@ -37,10 +37,10 @@ const useMainCryptosHook = () => {
   const mainList = useMemo(
     () =>
       getCryptoTableDataFromRaw(
-        settings?.activeTab === "all" ? list : portfolio,
+        settings?.activeTab === "all" ? cryptos?.list : portfolio,
         selected
       ),
-    [list, portfolio, settings?.activeTab, selected]
+    [cryptos?.list, portfolio, settings?.activeTab, selected]
   );
 
   const handleColumnHeaderClick = useCallback(
@@ -65,12 +65,31 @@ const useMainCryptosHook = () => {
     _: React.SyntheticEvent,
     activeTab: "all" | "portfolio"
   ) => {
-    setSettings((prev) => ({ ...prev, activeTab }));
+    setSortSettings({
+      active: "",
+      isDesc: true,
+    });
+    setSettings((prev) => ({
+      ...prev,
+      activeTab, // here
+      searchKey: "",
+      searchedList: [],
+    }));
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSettings((prev) => ({ ...prev, searchKey: event.target.value }));
   };
+
+  useEffect(() => {
+    setSettings((prev) => ({ ...prev, loading: true }));
+    if (settings?.searchKey !== "" && mainList?.length) {
+      setTimeout(() => {
+        setSettings((prev) => ({ ...prev, loading: false }));
+      }, 500);
+    } else
+      setSettings((prev) => ({ ...prev, searchedList: [], loading: false }));
+  }, [mainList, settings?.searchKey]);
 
   return {
     fiatKeySelected: selected,
@@ -80,7 +99,8 @@ const useMainCryptosHook = () => {
     handleTabChange,
     sortSettings,
     settings,
-    loading,
+    loading: settings.loading,
+    cryptoList: settings?.searchKey !== "" ? settings?.searchedList : mainList,
   };
 };
 

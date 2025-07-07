@@ -1,8 +1,5 @@
 import React from "react";
 import { Box, Tab, Tabs, TextField } from "@mui/material";
-
-import { getCryptoTableDataFromRaw } from "@/utils/General.helpers";
-import { dummyApiCryptoList } from "@/constant/Dummy.const";
 import { List, ListMobile } from "./components";
 
 import useMainCryptosHook from "./useMainCryptosHook";
@@ -11,9 +8,9 @@ import useStyles from "./useMainCryptosStyles";
 const MainCryptos: React.FC = () => {
   const styles = useStyles();
   const {
-    fiatKeySelected,
     loading,
     settings,
+    cryptoList,
     handleTabChange,
     handleSearchChange,
     handleColumnHeaderClick,
@@ -29,31 +26,28 @@ const MainCryptos: React.FC = () => {
           <Tab label="Portfolio" value="portfolio" />
         </Tabs>
         <TextField
-          // disabled
-          value={settings.searchKey}
-          onChange={handleSearchChange}
           id="search-field"
           size="small"
-          label="Search cryptocurrency"
+          label="Search"
+          value={settings.searchKey}
+          onChange={handleSearchChange}
         />
       </Box>
       {styles.isUpTabletScreen ? (
         <List
-          handleColumnHeaderClick={handleColumnHeaderClick}
-          columnHeaderIsSelected={columnHeaderIsSelected}
+          loading={loading}
+          activeTab={settings.activeTab}
           searchActive={settings.searchKey !== ""}
-          cryptoList={getCryptoTableDataFromRaw(
-            dummyApiCryptoList?.data,
-            fiatKeySelected
-          )}
+          cryptoList={cryptoList}
+          columnHeaderIsSelected={columnHeaderIsSelected}
+          handleColumnHeaderClick={handleColumnHeaderClick}
         />
       ) : (
         <ListMobile
+          loading={loading}
+          activeTab={settings.activeTab}
           searchActive={settings.searchKey !== ""}
-          cryptoList={getCryptoTableDataFromRaw(
-            dummyApiCryptoList?.data,
-            fiatKeySelected
-          )}
+          cryptoList={cryptoList}
         />
       )}
 

@@ -20,7 +20,7 @@ const initialListState: TypesTableData = {
 };
 
 const initialState: TypesAppSliceState = {
-  portfolio: {},
+  portfolio: [],
   searchQuery: "",
   cryptos: initialListState,
   trending: initialListState,
@@ -40,8 +40,14 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setProtfolio: (state, action: PayloadAction<Partial<{}>>) => {
-      state.portfolio = action.payload;
+    addToProtfolio: (state, action: PayloadAction<Partial<Object>>) => {
+      state.portfolio.push(action.payload);
+    },
+    removeToProtfolio: (
+      state,
+      action: PayloadAction<Partial<string | number>>
+    ) => {
+      state.portfolio.filter((currency) => currency?.id != action.payload);
     },
     setFiatKeys: (state, action: PayloadAction<Partial<TypesFiatKeys>>) => {
       state.fiatKeys = handleReducersPayload(
@@ -82,9 +88,10 @@ const appSlice = createSlice({
 
 const { reducer, actions } = appSlice;
 export const {
+  addToProtfolio,
+  removeToProtfolio,
   setCryptos,
   setFiatKeys,
-  setProtfolio,
   setSelectedCrypto,
   setTrendingCryptos,
 } = actions;

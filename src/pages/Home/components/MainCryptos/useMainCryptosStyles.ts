@@ -157,12 +157,19 @@ const useStyles = (): TheAnyTheme => {
           },
           "&.action": {
             maxWidth: "8rem",
-            gap: "0.75rem",
+            gap: "1rem",
             "& > svg": {
               height: "1.125rem",
               width: "1.125rem",
               borderRadius: "0.125rem",
               cursor: "pointer",
+              transition: "all 0.3s",
+              "&:hover": {
+                transform: "scale(1.1)",
+              },
+              "&:active": {
+                transform: "scale(0.9)",
+              },
             },
           },
         },
@@ -182,6 +189,24 @@ const useStyles = (): TheAnyTheme => {
           "& > span": {
             minWidth: "35px",
           },
+        },
+        "& > span:nth-last-of-type(1)": {
+          maxWidth: "8rem",
+        },
+      },
+      // TABLE - Empty
+      "& > .t-row-empty": {
+        ...theme?.cxFlexBox?.colCenterCenter,
+        height: "19.125rem",
+        gap: "1rem",
+        "& > p": {
+          ...theme.cxTypography.paragraph,
+          color: theme.palette?.text,
+        },
+        "& > svg": {
+          color: theme.palette?.grey?.[isLightMode ? 400 : 400],
+          height: "5rem",
+          width: "5rem",
         },
       },
     },

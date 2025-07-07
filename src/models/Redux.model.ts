@@ -26,8 +26,8 @@ export interface TypesFiatKeys {
 }
 
 export interface TypesAppSliceState {
+  portfolio: TheAnyConst[];
   searchQuery: string;
-  portfolio: Object;
   cryptos: TypesTableData;
   trending: TypesTableData;
   fiatKeys: TypesFiatKeys;

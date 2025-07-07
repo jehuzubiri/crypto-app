@@ -12,8 +12,10 @@ import LoaderMobile from "../../../Custom/LoaderMobile";
 import useStyles from "../../useMainCryptosStyles";
 
 const ListMobile: React.FC<{
-  cryptoList: CryproParsedListItem[];
+  activeTab: "all" | "portfolio";
+  loading: boolean;
   searchActive: boolean;
+  cryptoList: CryproParsedListItem[];
 }> = ({ cryptoList = [], searchActive = false }) => {
   const styles = useStyles();
 

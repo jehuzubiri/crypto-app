@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { Box, Skeleton } from "@mui/material";
+import { Box } from "@mui/material";
 import { FaChevronDown } from "react-icons/fa";
 import { RiAddLargeFill } from "react-icons/ri";
 import { MdOpenInNew } from "react-icons/md";
@@ -11,6 +11,8 @@ import { AppAssetImages } from "@/constant/App.const";
 import { CryproParsedListItem, TheAnyConst } from "@/models/General.model";
 import { fiatAmountDisplayFormatter } from "@/utils/General.helpers";
 import useStyles from "../../useMainCryptosStyles";
+import Loading from "./components/Loading";
+import Empty from "./components/Empty";
 
 const columns = [
   {
@@ -39,22 +41,24 @@ const columns = [
 type TableColumnTypes = "name" | "price" | "change" | "supply";
 
 const List: React.FC<{
-  cryptoList: CryproParsedListItem[];
+  activeTab: "all" | "portfolio";
+  loading: boolean;
   searchActive: boolean;
+  cryptoList: CryproParsedListItem[];
+  handleColumnHeaderClick: (props: TableColumnTypes) => void;
   columnHeaderIsSelected: (props: TableColumnTypes) => {
     isActive: boolean;
     isDesc: boolean;
   };
-  handleColumnHeaderClick: (props: TableColumnTypes) => void;
 }> = ({
+  loading = false,
+  activeTab,
   cryptoList = [],
   searchActive = false,
   columnHeaderIsSelected,
   handleColumnHeaderClick,
 }) => {
   const styles = useStyles();
-  const loadingItems = Array.from({ length: 5 }, (_, i) => i + 1);
-
   const { cryptos, fiatKeys } = useSelector((state: RootState) => state.app);
   const { logos } = cryptos;
   const { selected } = fiatKeys;
@@ -90,7 +94,9 @@ const List: React.FC<{
       </Box>
 
       {/* TABLE ROWS */}
-      {cryptoList?.length ? (
+      {loading && searchActive ? (
+        <Loading />
+      ) : cryptoList?.length ? (
         cryptoList?.map((crypto: CryproParsedListItem) => {
           const cryptoSymbol = crypto?.symbol || "";
           const quoteChange = crypto?.percent_24h || 0;
@@ -143,33 +149,8 @@ const List: React.FC<{
             </Box>
           );
         })
-      ) : searchActive ? (
-        <p>Empty Here</p>
       ) : (
-        loadingItems.map((_, index) => {
-          const loadingColumns = Array.from({ length: 4 }, (_, i) => i + 1);
-          return (
-            <Box key={`key${index}`} className="t-row-loading">
-              <Box className="name">
-                <Skeleton
-                  animation="wave"
-                  variant="circular"
-                  width={35}
-                  height={35}
-                />
-                <Skeleton animation="wave" height={13.5} width="100%" />
-              </Box>
-              {loadingColumns?.map((_, childIndex) => (
-                <Skeleton
-                  key={`key${childIndex}`}
-                  animation="wave"
-                  height={13.5}
-                  width="100%"
-                />
-              ))}
-            </Box>
-          );
-        })
+        <Empty searchActive={searchActive} activeTab={activeTab} />
       )}
     </Box>
   );
